@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
 import { useRef } from "react";
+import type { MouseEvent as ReactMouseEvent } from "react";
 import { Palette, Sparkles, Camera, Layers, PenTool, Film, Code2, Megaphone, Wand2, Brush, Type, Zap } from "lucide-react";
 import { PageWrap } from "@/components/PageWrap";
 import { RevealText } from "@/components/RevealText";
@@ -53,19 +54,56 @@ function Hero({ data }: { data: Home["hero"] }) {
   const titleScale = useTransform(scrollYProgress, [0, 1], [1, 1.08]);
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
+  // Mouse-parallax: raw pointer position normalised to [-1, 1] on each axis,
+  // smoothed with a spring so the icons drift rather than snap.
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const springX = useSpring(mouseX, { stiffness: 120, damping: 20, mass: 0.4 });
+  const springY = useSpring(mouseY, { stiffness: 120, damping: 20, mass: 0.4 });
+
+  const handleMouseMove = (e: ReactMouseEvent<HTMLElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    mouseX.set(((e.clientX - rect.left) / rect.width - 0.5) * 2);
+    mouseY.set(((e.clientY - rect.top) / rect.height - 0.5) * 2);
+  };
+
   return (
-    <section ref={ref} className="relative -mt-28 md:-mt-32 h-[100svh] min-h-[100svh] w-full noise overflow-hidden animated-gradient-bg">
-      {/* animated gradient blobs */}
-      <motion.div aria-hidden style={{ y }} className="absolute inset-0 -z-10">
-        <div className="gradient-blob b1 -top-[20%] left-[10%] h-[55vw] w-[55vw]" />
-        <div className="gradient-blob b2 top-[30%] right-[-10%] h-[45vw] w-[45vw]" />
-        <div className="gradient-blob b3 bottom-[-20%] left-[20%] h-[40vw] w-[40vw]" />
+    <section
+      ref={ref}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={() => {
+        mouseX.set(0);
+        mouseY.set(0);
+      }}
+      className="relative -mt-28 md:-mt-32 h-[100svh] min-h-[100svh] w-full noise overflow-hidden bg-[#050308]"
+    >
+      {/* Dark creative gradient backdrop — layered, low-opacity radial glows on a
+          near-black base so nothing reads as a solid pastel band. */}
+      <div
+        aria-hidden
+        className="absolute inset-0 -z-20"
+        style={{
+          background:
+            "radial-gradient(45% 40% at 18% 15%, rgba(147,51,234,0.22), transparent 70%)," +
+            "radial-gradient(40% 35% at 85% 10%, rgba(56,189,248,0.14), transparent 70%)," +
+            "radial-gradient(50% 45% at 75% 90%, rgba(217,70,239,0.16), transparent 70%)," +
+            "radial-gradient(40% 35% at 10% 85%, rgba(99,102,241,0.14), transparent 70%)," +
+            "linear-gradient(180deg, #050308 0%, #0a0714 45%, #050308 100%)",
+        }}
+      />
+
+      {/* Subtle drifting glow accents, pinned to the corners so they never
+          merge into a visible strip across the middle. */}
+      <motion.div aria-hidden style={{ y }} className="absolute inset-0 -z-10 mix-blend-screen">
+        <div className="absolute -top-[8%] -left-[8%] h-[30vw] max-h-[380px] w-[30vw] max-w-[380px] rounded-full bg-fuchsia-600/15 blur-[110px]" />
+        <div className="absolute top-[5%] -right-[8%] h-[26vw] max-h-[340px] w-[26vw] max-w-[340px] rounded-full bg-cyan-500/10 blur-[110px]" />
+        <div className="absolute -bottom-[10%] left-[25%] h-[26vw] max-h-[340px] w-[26vw] max-w-[340px] rounded-full bg-violet-600/12 blur-[120px]" />
       </motion.div>
 
       {/* Floating agency icons */}
       <div className="pointer-events-none absolute inset-0 z-0 hidden md:block">
         {AGENCY_ICONS.map((item, i) => (
-          <FloatingIcon key={i} item={item} index={i} progress={scrollYProgress} />
+          <FloatingIcon key={i} item={item} index={i} progress={scrollYProgress} mouseX={springX} mouseY={springY} />
         ))}
       </div>
 
@@ -83,7 +121,7 @@ function Hero({ data }: { data: Home["hero"] }) {
           <RevealText
             as="h1"
             delay={1.5}
-            className="font-display text-gradient text-[8vw] md:text-[6vw] leading-[0.95] tracking-tight"
+            className="font-display bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-300 via-violet-200 to-cyan-200 text-[8vw] md:text-[6vw] leading-[0.95] tracking-tight"
           >
             {data.title}
           </RevealText>
@@ -137,35 +175,47 @@ type IconItem = {
 };
 
 const AGENCY_ICONS: IconItem[] = [
-  { Icon: Palette,   top: "8%",  left: "5%",  size: 56, speed: -0.35, rot: -8,  tint: "from-pink-500/30 to-purple-500/30" },
-  { Icon: PenTool,   top: "16%", left: "82%", size: 64, speed:  0.45, rot:  10, tint: "from-amber-400/30 to-rose-500/30" },
-  { Icon: Camera,    top: "62%", left: "6%",  size: 72, speed:  0.6,  rot:  6,  tint: "from-cyan-400/30 to-blue-500/30" },
-  { Icon: Film,      top: "70%", left: "84%", size: 60, speed: -0.5,  rot: -9,  tint: "from-violet-500/30 to-fuchsia-500/30" },
-  { Icon: Layers,    top: "40%", left: "2%",  size: 48, speed:  0.3,  rot:  12, tint: "from-emerald-400/30 to-teal-500/30" },
-  { Icon: Sparkles,  top: "44%", left: "90%", size: 52, speed: -0.4,  rot: -12, tint: "from-yellow-300/30 to-orange-500/30" },
-  { Icon: Code2,     top: "84%", left: "44%", size: 56, speed:  0.25, rot: -3,  tint: "from-sky-400/30 to-indigo-500/30" },
-  { Icon: Megaphone, top: "4%",  left: "44%", size: 52, speed: -0.25, rot:  4,  tint: "from-red-400/30 to-pink-500/30" },
-  { Icon: Brush,     top: "30%", left: "30%", size: 44, speed:  0.2,  rot:  -6, tint: "from-fuchsia-400/30 to-purple-500/30" },
-  { Icon: Type,      top: "78%", left: "22%", size: 48, speed: -0.3,  rot:  8,  tint: "from-lime-400/30 to-emerald-500/30" },
-  { Icon: Wand2,     top: "26%", left: "62%", size: 50, speed:  0.35, rot:  -5, tint: "from-indigo-400/30 to-violet-500/30" },
-  { Icon: Zap,       top: "56%", left: "70%", size: 46, speed: -0.28, rot:  9,  tint: "from-orange-400/30 to-amber-500/30" },
+  { Icon: Palette,   top: "8%",  left: "5%",  size: 34, speed: -0.35, rot: -8,  tint: "from-pink-500/30 to-purple-500/30" },
+  { Icon: PenTool,   top: "16%", left: "82%", size: 38, speed:  0.45, rot:  10, tint: "from-amber-400/30 to-rose-500/30" },
+  { Icon: Camera,    top: "62%", left: "6%",  size: 42, speed:  0.6,  rot:  6,  tint: "from-cyan-400/30 to-blue-500/30" },
+  { Icon: Film,      top: "70%", left: "84%", size: 36, speed: -0.5,  rot: -9,  tint: "from-violet-500/30 to-fuchsia-500/30" },
+  { Icon: Layers,    top: "40%", left: "2%",  size: 30, speed:  0.3,  rot:  12, tint: "from-emerald-400/30 to-teal-500/30" },
+  { Icon: Sparkles,  top: "44%", left: "90%", size: 32, speed: -0.4,  rot: -12, tint: "from-yellow-300/30 to-orange-500/30" },
+  { Icon: Code2,     top: "84%", left: "44%", size: 34, speed:  0.25, rot: -3,  tint: "from-sky-400/30 to-indigo-500/30" },
+  { Icon: Megaphone, top: "4%",  left: "44%", size: 32, speed: -0.25, rot:  4,  tint: "from-red-400/30 to-pink-500/30" },
+  { Icon: Brush,     top: "30%", left: "30%", size: 28, speed:  0.2,  rot:  -6, tint: "from-fuchsia-400/30 to-purple-500/30" },
+  { Icon: Type,      top: "78%", left: "22%", size: 30, speed: -0.3,  rot:  8,  tint: "from-lime-400/30 to-emerald-500/30" },
+  { Icon: Wand2,     top: "26%", left: "62%", size: 32, speed:  0.35, rot:  -5, tint: "from-indigo-400/30 to-violet-500/30" },
+  { Icon: Zap,       top: "56%", left: "70%", size: 28, speed: -0.28, rot:  9,  tint: "from-orange-400/30 to-amber-500/30" },
 ];
 
 function FloatingIcon({
   item,
   index,
   progress,
+  mouseX,
+  mouseY,
 }: {
   item: IconItem;
   index: number;
   progress: ReturnType<typeof useScroll>["scrollYProgress"];
+  mouseX: ReturnType<typeof useSpring>;
+  mouseY: ReturnType<typeof useSpring>;
 }) {
-  const y = useTransform(progress, [0, 1], [0, 600 * item.speed]);
+  const scrollY = useTransform(progress, [0, 1], [0, 600 * item.speed]);
   const rotate = useTransform(progress, [0, 1], [item.rot, item.rot + item.speed * 20]);
+
+  // Each icon drifts with the cursor by an amount proportional to its own
+  // "speed" value, so icons already set up as different depth layers for
+  // scroll read as different depth layers on mouse move too.
+  const parallaxStrength = 26;
+  const x = useTransform(mouseX, (mx) => mx * item.speed * parallaxStrength);
+  const combinedY = useTransform([scrollY, mouseY], ([sy, my]) => (sy as number) + (my as number) * item.speed * parallaxStrength);
+
   const { Icon } = item;
   return (
     <motion.div
-      style={{ y, rotate, top: item.top, left: item.left, width: item.size, height: item.size }}
+      style={{ x, y: combinedY, rotate, top: item.top, left: item.left, width: item.size, height: item.size }}
       initial={{ opacity: 0, scale: 0.6 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 1.6 + index * 0.06, duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}

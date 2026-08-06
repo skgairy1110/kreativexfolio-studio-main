@@ -5,9 +5,9 @@
     "paragraph": "Tell us about your project, your timeline and what success looks like. We respond within two business days."
   },
   "channels": [
-    { "label": "New business", "value": "hello@studio.com", "href": "mailto:hello@studio.com" },
-    { "label": "Press", "value": "press@studio.com", "href": "mailto:press@studio.com" },
-    { "label": "Careers", "value": "join@studio.com", "href": "mailto:join@studio.com" }
+    { "label": "New business", "value": "hello@gairystudio.com", "href": "mailto:hello@gairystudio.com" },
+    { "label": "Press", "value": "press@gairystudio.com", "href": "mailto:press@gairystudio.com" },
+    { "label": "Careers", "value": "join@gairystudio.com", "href": "mailto:join@gairystudio.com" }
   ],
   "locations": [
     { "city": "London", "address": "12 Curtain Road, EC2A" },
