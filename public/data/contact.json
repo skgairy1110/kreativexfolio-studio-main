@@ -1,0 +1,25 @@
+{
+  "intro": {
+    "eyebrow": "Contact",
+    "headline": "Let's build\nsomething\nremarkable.",
+    "paragraph": "Tell us about your project, your timeline and what success looks like. We respond within two business days."
+  },
+  "channels": [
+    { "label": "New business", "value": "hello@studio.com", "href": "mailto:hello@studio.com" },
+    { "label": "Press", "value": "press@studio.com", "href": "mailto:press@studio.com" },
+    { "label": "Careers", "value": "join@studio.com", "href": "mailto:join@studio.com" }
+  ],
+  "locations": [
+    { "city": "London", "address": "12 Curtain Road, EC2A" },
+    { "city": "Lisbon", "address": "Rua da Boavista 84" }
+  ],
+  "form": {
+    "fields": [
+      { "name": "name", "label": "Your name", "type": "text" },
+      { "name": "email", "label": "Email address", "type": "email" },
+      { "name": "message", "label": "Tell us about your project", "type": "textarea" }
+    ],
+    "submitLabel": "Send message",
+    "successMessage": "Thanks — we've got your message and will be in touch shortly."
+  }
+}

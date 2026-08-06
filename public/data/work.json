@@ -1,0 +1,157 @@
+{
+  "categories": ["All", "Website", "UI/UX", "Video", "Social Media", "Ads"],
+  "projects": [
+    {
+      "slug": "lumen-os",
+      "title": "Lumen OS",
+      "category": "Website",
+      "client": "Lumen Labs",
+      "year": "2025",
+      "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600&q=80",
+      "description": "A marketing site for a next-generation operating system, built around a kinetic type system and WebGL hero.",
+      "sections": {
+        "challenge": "Lumen needed a launch site that signalled platform ambition without falling into generic SaaS tropes.",
+        "solution": "We built a kinetic identity, a custom typography stack and a WebGL hero that reacts to the user's cursor.",
+        "result": "Launch week traffic exceeded targets by 240% and the site was featured across major design publications."
+      },
+      "gallery": [
+        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&q=80",
+        "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1600&q=80",
+        "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=1600&q=80"
+      ]
+    },
+    {
+      "slug": "nova-finance",
+      "title": "Nova Finance",
+      "category": "UI/UX",
+      "client": "Nova",
+      "year": "2025",
+      "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&q=80",
+      "description": "A complete product redesign for a fintech challenger bank, focused on clarity and trust.",
+      "sections": {
+        "challenge": "The legacy product had grown organically and confused new users at every step.",
+        "solution": "We rebuilt the information architecture and shipped a calm, modular design system across web and mobile.",
+        "result": "Activation rates climbed 62% and support tickets dropped by a third in the first quarter."
+      },
+      "gallery": [
+        "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1600&q=80",
+        "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80",
+        "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=1600&q=80"
+      ]
+    },
+    {
+      "slug": "atlas-motion",
+      "title": "Atlas Motion",
+      "category": "Video",
+      "client": "Atlas Studio",
+      "year": "2024",
+      "image": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1600&q=80",
+      "description": "A title sequence and brand film for a documentary series exploring modern cartography.",
+      "sections": {
+        "challenge": "Convey the romance of mapmaking without leaning on cliché globe-and-compass visuals.",
+        "solution": "We crafted a typographic title sequence anchored in topographic line work and tactile film grain.",
+        "result": "The series debuted to critical acclaim and the open titles were nominated for a Promax award."
+      },
+      "gallery": [
+        "https://images.unsplash.com/photo-1500964757637-c85e8a162699?w=1600&q=80",
+        "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&q=80",
+        "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1600&q=80"
+      ]
+    },
+    {
+      "slug": "ember-social",
+      "title": "Ember Social",
+      "category": "Social Media",
+      "client": "Ember",
+      "year": "2024",
+      "image": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1600&q=80",
+      "description": "A year-long social system for a fast-growing lifestyle brand across Instagram and TikTok.",
+      "sections": {
+        "challenge": "Move from one-off posts to a coherent visual language that scaled across channels.",
+        "solution": "We built a modular content system with templates, motion presets and a tone-of-voice guide.",
+        "result": "Engagement grew 4x year-on-year and the brand crossed 1M followers within 9 months."
+      },
+      "gallery": [
+        "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=1600&q=80",
+        "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=1600&q=80",
+        "https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=1600&q=80"
+      ]
+    },
+    {
+      "slug": "vox-campaign",
+      "title": "Vox Campaign",
+      "category": "Ads",
+      "client": "Vox Audio",
+      "year": "2024",
+      "image": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1600&q=80",
+      "description": "A multi-channel paid campaign for the launch of a flagship pair of studio headphones.",
+      "sections": {
+        "challenge": "Cut through a crowded audio market on a tight launch window.",
+        "solution": "We led art direction, production and media planning across OOH, paid social and YouTube pre-roll.",
+        "result": "Hit 110% of launch revenue target in week one and sold through inventory within a month."
+      },
+      "gallery": [
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1600&q=80",
+        "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=1600&q=80",
+        "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=1600&q=80"
+      ]
+    },
+    {
+      "slug": "harbor-site",
+      "title": "Harbor",
+      "category": "Website",
+      "client": "Harbor Co.",
+      "year": "2023",
+      "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80",
+      "description": "An editorial website for a coastal hospitality brand, built around long-form storytelling.",
+      "sections": {
+        "challenge": "Translate the feeling of a place into a digital surface without resorting to stock photography.",
+        "solution": "We commissioned an original photo essay and built a magazine-style site with custom scroll choreography.",
+        "result": "Direct bookings grew 78% in the first six months and average session time tripled."
+      },
+      "gallery": [
+        "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80",
+        "https://images.unsplash.com/photo-1493558103817-58b2924bce98?w=1600&q=80",
+        "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1600&q=80"
+      ]
+    },
+    {
+      "slug": "kite-app",
+      "title": "Kite App",
+      "category": "UI/UX",
+      "client": "Kite",
+      "year": "2023",
+      "image": "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?w=1600&q=80",
+      "description": "Product design for a calm productivity tool aimed at independent makers.",
+      "sections": {
+        "challenge": "Build a focus-first experience in a category dominated by feature-heavy competitors.",
+        "solution": "We led product strategy and shipped an opinionated, distraction-free interface across platforms.",
+        "result": "Reached 50k MAU in the first year with zero paid acquisition."
+      },
+      "gallery": [
+        "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1600&q=80",
+        "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1600&q=80",
+        "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1600&q=80"
+      ]
+    },
+    {
+      "slug": "forma-film",
+      "title": "Forma Film",
+      "category": "Video",
+      "client": "Forma",
+      "year": "2023",
+      "image": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1600&q=80",
+      "description": "A brand film for an architectural practice known for adaptive reuse projects.",
+      "sections": {
+        "challenge": "Capture the studio's philosophy of working with existing buildings, not against them.",
+        "solution": "A two-week shoot across three projects, edited around a spoken word piece commissioned for the film.",
+        "result": "Used as the centrepiece of the studio's biennale presentation and three new commissions followed."
+      },
+      "gallery": [
+        "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80",
+        "https://images.unsplash.com/photo-1481253127861-371fed7f7daa?w=1600&q=80",
+        "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1600&q=80"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "intro": {
+    "eyebrow": "Services",
+    "headline": "A full-stack creative team, on call.",
+    "paragraph": "We work in tight, senior-led pods that move quickly across strategy, design, motion and engineering."
+  },
+  "services": [
+    {
+      "number": "01",
+      "title": "Brand Identity",
+      "description": "Positioning, naming, visual identity systems and guidelines designed to scale.",
+      "deliverables": ["Strategy", "Logo & wordmark", "Type & colour systems", "Brand guidelines"]
+    },
+    {
+      "number": "02",
+      "title": "Web Design & Build",
+      "description": "Editorial marketing sites and interactive product surfaces, built on modern stacks.",
+      "deliverables": ["Art direction", "Design system", "Front-end build", "CMS integration"]
+    },
+    {
+      "number": "03",
+      "title": "Digital Product",
+      "description": "End-to-end product design for SaaS, fintech and consumer apps.",
+      "deliverables": ["Research", "UX & IA", "UI design", "Design systems"]
+    },
+    {
+      "number": "04",
+      "title": "Motion & Film",
+      "description": "Title sequences, brand films, product motion and 3D content for launches and campaigns.",
+      "deliverables": ["Concept & storyboard", "Direction", "2D & 3D animation", "Sound design"]
+    },
+    {
+      "number": "05",
+      "title": "Social & Campaign",
+      "description": "Modular content systems and integrated campaigns across social, paid and OOH.",
+      "deliverables": ["Creative direction", "Content systems", "Production", "Media planning"]
+    },
+    {
+      "number": "06",
+      "title": "Creative Direction",
+      "description": "Ongoing partnership with founders and in-house teams to keep the work sharp.",
+      "deliverables": ["Quarterly reviews", "Art direction", "Hiring support", "Workshops"]
+    }
+  ]
+}

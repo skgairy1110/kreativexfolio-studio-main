@@ -1,0 +1,25 @@
+{
+  "intro": {
+    "eyebrow": "About",
+    "headline": "We're a small studio with an oversized appetite for craft.",
+    "paragraph": "Founded in 2018, we're a team of designers, engineers and motion artists working with founders and brand leaders to build the next chapter of their digital presence."
+  },
+  "values": [
+    { "title": "Craft over volume", "description": "Fewer projects, deeper care. Every pixel and frame is intentional." },
+    { "title": "Strategy first", "description": "We design from positioning outward, not the other way around." },
+    { "title": "Motion as language", "description": "Movement clarifies hierarchy and gives brands a heartbeat." },
+    { "title": "Built to last", "description": "Modular systems and clean code that outlive launch day." }
+  ],
+  "stats": [
+    { "value": 120, "suffix": "+", "label": "Projects shipped" },
+    { "value": 7, "suffix": "yrs", "label": "Studio years" },
+    { "value": 38, "suffix": "", "label": "Awards" },
+    { "value": 24, "suffix": "", "label": "Countries" }
+  ],
+  "team": [
+    { "name": "Maya Okafor", "role": "Creative Director", "image": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=600&q=80" },
+    { "name": "Theo Lindqvist", "role": "Design Engineer", "image": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80" },
+    { "name": "Ines Marchetti", "role": "Motion Lead", "image": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&q=80" },
+    { "name": "Kenji Park", "role": "Strategy", "image": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=600&q=80" }
+  ]
+}
