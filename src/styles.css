@@ -132,7 +132,7 @@
   100% { transform: translate3d(-50%,0,0); }
 }
 .marquee-track {
-  animation: marquee-x 30s linear infinite;
+  animation: marquee-x 10s linear infinite;
   will-change: transform;
 }
 
