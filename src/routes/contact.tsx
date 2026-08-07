@@ -7,7 +7,13 @@ import { MagneticButton } from "@/components/MagneticButton";
 import { useJson } from "@/hooks/use-json";
 import { dataPaths } from "@/utils/dataLoader";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { sendContactMessage } from "@/lib/api/contact.functions";
+
+// Where submissions are delivered. No API key, no server setup — FormSubmit
+// (https://formsubmit.co) forwards a POST straight to this inbox, the same
+// way a plain PHP `mail()` contact form would. First submission triggers a
+// one-time "Activate your form" email to this address — click the link in
+// it once, and every submission after that is delivered automatically.
+const CONTACT_EMAIL = "shankargairy99@gmail.com";
 
 type ContactField = {
   name: string;
@@ -48,17 +54,29 @@ function ContactPage() {
     setError(null);
     setSubmitting(true);
     try {
-      await sendContactMessage({
-        data: {
-          name: values.name || "",
-          company: values.company || "",
-          email: values.email || "",
-          projectType: values.projectType || "",
-          budget: values.budget || "",
-          timeline: values.timeline || "",
-          message: values.message || "",
+      const response = await fetch(`https://formsubmit.co/ajax/${CONTACT_EMAIL}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
+        body: JSON.stringify({
+          _subject: `New project enquiry from ${values.name || "website visitor"}`,
+          _template: "table",
+          _captcha: "false",
+          _replyto: values.email || "",
+          Name: values.name || "",
+          "Company / Brand": values.company || "—",
+          Email: values.email || "",
+          "Type of project": values.projectType || "",
+          "Estimated budget": values.budget || "",
+          "Ideal timeline": values.timeline || "",
+          "Project details": values.message || "",
+        }),
       });
+      if (!response.ok) {
+        throw new Error("Failed to send your message. Please try again in a moment.");
+      }
       setSent(true);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong sending your message.");
