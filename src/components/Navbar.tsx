@@ -20,7 +20,7 @@ const FALLBACK: Site = {
     { label: "Home", href: "/" },
     { label: "Work", href: "/work" },
     { label: "Services", href: "/services" },
-    { label: "Studio", href: "/about" },
+    { label: "About us", href: "/about" },
     { label: "Contact", href: "/contact" },
   ],
   navCta: { label: "Start a project", href: "/contact" },

@@ -1,13 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { motion, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
-import { useRef } from "react";
-import type { MouseEvent as ReactMouseEvent } from "react";
-import { Palette, Sparkles, Camera, Layers, PenTool, Film, Code2, Megaphone, Wand2, Brush, Type, Zap } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useTransform, useMotionValue, useSpring } from "framer-motion";
+import { useRef, useState } from "react";
+import type { MouseEvent as ReactMouseEvent, ReactNode } from "react";
 import { PageWrap } from "@/components/PageWrap";
 import { RevealText } from "@/components/RevealText";
 import { Marquee } from "@/components/Marquee";
 import { MagneticButton } from "@/components/MagneticButton";
 import { TiltCard } from "@/components/TiltCard";
+import { HeroGalaxy, type GalaxyHandle } from "@/components/HeroGalaxy";
 import { useJson } from "@/hooks/use-json";
 import { dataPaths } from "@/utils/dataLoader";
 
@@ -49,6 +49,7 @@ function Index() {
 
 function Hero({ data }: { data: Home["hero"] }) {
   const ref = useRef<HTMLDivElement>(null);
+  const galaxyRef = useRef<GalaxyHandle>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
   const titleY = useTransform(scrollYProgress, [0, 1], [0, -120]);
@@ -56,7 +57,9 @@ function Hero({ data }: { data: Home["hero"] }) {
   const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
 
   // Mouse-parallax: raw pointer position normalised to [-1, 1] on each axis,
-  // smoothed with a spring so the icons drift rather than snap.
+  // smoothed with a spring so the headline drifts rather than snaps. The
+  // same pointer position (in pixels) is also forwarded to the galaxy canvas
+  // imperatively, so it can react without triggering React re-renders.
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const springX = useSpring(mouseX, { stiffness: 120, damping: 20, mass: 0.4 });
@@ -64,18 +67,35 @@ function Hero({ data }: { data: Home["hero"] }) {
 
   const handleMouseMove = (e: ReactMouseEvent<HTMLElement>) => {
     const rect = e.currentTarget.getBoundingClientRect();
-    mouseX.set(((e.clientX - rect.left) / rect.width - 0.5) * 2);
-    mouseY.set(((e.clientY - rect.top) / rect.height - 0.5) * 2);
+    const relX = e.clientX - rect.left;
+    const relY = e.clientY - rect.top;
+    mouseX.set((relX / rect.width - 0.5) * 2);
+    mouseY.set((relY / rect.height - 0.5) * 2);
+    galaxyRef.current?.setPointer(relX, relY);
   };
+
+  const handleMouseLeave = () => {
+    mouseX.set(0);
+    mouseY.set(0);
+    galaxyRef.current?.setPointer(null, null);
+  };
+
+  // Tiny headline parallax — a few px of drift and a hair of scale, eased
+  // through the same spring as everything else so it stays smooth and never
+  // competes with legibility.
+  const textX = useTransform(springX, (v) => v * 6);
+  const textParY = useTransform(springY, (v) => v * 6);
+  const textScale = useTransform([springX, springY], ([sx, sy]) =>
+    1 + Math.min(0.018, (Math.abs(sx as number) + Math.abs(sy as number)) * 0.01)
+  );
+  const combinedTitleY = useTransform([titleY, textParY], ([a, b]) => (a as number) + (b as number));
+  const combinedTitleScale = useTransform([titleScale, textScale], ([a, b]) => (a as number) * (b as number));
 
   return (
     <section
       ref={ref}
       onMouseMove={handleMouseMove}
-      onMouseLeave={() => {
-        mouseX.set(0);
-        mouseY.set(0);
-      }}
+      onMouseLeave={handleMouseLeave}
       className="relative -mt-28 md:-mt-32 h-[100svh] min-h-[100svh] w-full noise overflow-hidden bg-[#050308]"
     >
       {/* Dark creative gradient backdrop — layered, low-opacity radial glows on a
@@ -93,21 +113,19 @@ function Hero({ data }: { data: Home["hero"] }) {
         }}
       />
 
-      {/* Subtle drifting glow accents, pinned to the corners so they never
-          merge into a visible strip across the middle. */}
+      {/* Layer 1 — nebula glow: subtle drifting accents, pinned to the
+          corners so they never merge into a visible strip across the middle. */}
       <motion.div aria-hidden style={{ y }} className="absolute inset-0 -z-10 mix-blend-screen">
-        <div className="absolute -top-[8%] -left-[8%] h-[30vw] max-h-[380px] w-[30vw] max-w-[380px] rounded-full bg-fuchsia-600/15 blur-[110px]" />
-        <div className="absolute top-[5%] -right-[8%] h-[26vw] max-h-[340px] w-[26vw] max-w-[340px] rounded-full bg-cyan-500/10 blur-[110px]" />
-        <div className="absolute -bottom-[10%] left-[25%] h-[26vw] max-h-[340px] w-[26vw] max-w-[340px] rounded-full bg-violet-600/12 blur-[120px]" />
+        <div className="absolute -top-[8%] -left-[8%] h-[30vw] max-h-[380px] w-[30vw] max-w-[380px] rounded-full bg-fuchsia-600/15 blur-[110px] [animation:blob-float_22s_ease-in-out_infinite]" />
+        <div className="absolute top-[5%] -right-[8%] h-[26vw] max-h-[340px] w-[26vw] max-w-[340px] rounded-full bg-cyan-500/10 blur-[110px] [animation:blob-float_27s_ease-in-out_infinite_2s]" />
+        <div className="absolute -bottom-[10%] left-[25%] h-[26vw] max-h-[340px] w-[26vw] max-w-[340px] rounded-full bg-violet-600/12 blur-[120px] [animation:blob-float_31s_ease-in-out_infinite_1s]" />
       </motion.div>
 
-      {/* Floating agency icons */}
-      <div className="pointer-events-none absolute inset-0 z-0 hidden md:block">
-        {AGENCY_ICONS.map((item, i) => (
-          <FloatingIcon key={i} item={item} index={i} progress={scrollYProgress} mouseX={springX} mouseY={springY} />
-        ))}
-      </div>
+      {/* Layer 2 — interactive galaxy: stars, drifting particles, cursor-driven
+          constellations and glow, rendered on canvas for performance. */}
+      <HeroGalaxy ref={galaxyRef} progress={scrollYProgress} />
 
+      {/* Layer 3 — headline, subtitle and CTAs */}
       <motion.div style={{ opacity }} className="relative z-10 mx-auto flex h-full max-w-[1400px] flex-col justify-between px-6 pb-12 pt-24 md:px-10 md:pb-20 md:pt-32">
         <motion.span
           initial={{ opacity: 0, y: 12 }}
@@ -118,7 +136,7 @@ function Hero({ data }: { data: Home["hero"] }) {
           {data.eyebrow}
         </motion.span>
 
-        <motion.div style={{ y: titleY, scale: titleScale }} className="my-12 md:my-0 text-center">
+        <motion.div style={{ y: combinedTitleY, scale: combinedTitleScale, x: textX }} className="my-12 md:my-0 text-center">
           <RevealText
             as="h1"
             delay={1.5}
@@ -143,21 +161,25 @@ function Hero({ data }: { data: Home["hero"] }) {
             transition={{ delay: 2.4, duration: 0.7 }}
             className="flex items-center gap-4"
           >
-            <MagneticButton>
+            <MagneticCtaGlow>
+              <MagneticButton>
+                <Link
+                  to={data.cta.href as "/contact"}
+                  className="btn-shine inline-flex items-center gap-3 rounded-full bg-primary px-8 py-4 text-sm uppercase tracking-[0.2em] text-primary-foreground shadow-[0_20px_60px_-20px] shadow-primary/60"
+                >
+                  {data.cta.label}
+                  <span aria-hidden>→</span>
+                </Link>
+              </MagneticButton>
+            </MagneticCtaGlow>
+            <motion.div whileHover={{ x: 4 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
               <Link
-                to={data.cta.href as "/contact"}
-                className="btn-shine inline-flex items-center gap-3 rounded-full bg-primary px-8 py-4 text-sm uppercase tracking-[0.2em] text-primary-foreground shadow-[0_20px_60px_-20px] shadow-primary/60"
+                to={data.secondaryCta.href as "/work"}
+                className="story-link text-sm uppercase tracking-[0.2em]"
               >
-                {data.cta.label}
-                <span aria-hidden>→</span>
+                {data.secondaryCta.label}
               </Link>
-            </MagneticButton>
-            <Link
-              to={data.secondaryCta.href as "/work"}
-              className="story-link text-sm uppercase tracking-[0.2em]"
-            >
-              {data.secondaryCta.label}
-            </Link>
+            </motion.div>
           </motion.div>
         </div>
       </motion.div>
@@ -165,67 +187,48 @@ function Hero({ data }: { data: Home["hero"] }) {
   );
 }
 
-type IconItem = {
-  Icon: typeof Palette;
-  top: string;
-  left: string;
-  size: number;
-  speed: number;
-  rot: number;
-  tint: string;
-};
+const CTA_PARTICLE_ANGLES = [0, 1, 2, 3, 4, 5].map((i) => (i / 6) * Math.PI * 2);
 
-const AGENCY_ICONS: IconItem[] = [
-  { Icon: Palette,   top: "8%",  left: "5%",  size: 34, speed: -0.35, rot: -8,  tint: "from-pink-500/30 to-purple-500/30" },
-  { Icon: PenTool,   top: "16%", left: "82%", size: 38, speed:  0.45, rot:  10, tint: "from-amber-400/30 to-rose-500/30" },
-  { Icon: Camera,    top: "62%", left: "6%",  size: 42, speed:  0.6,  rot:  6,  tint: "from-cyan-400/30 to-blue-500/30" },
-  { Icon: Film,      top: "70%", left: "84%", size: 36, speed: -0.5,  rot: -9,  tint: "from-violet-500/30 to-fuchsia-500/30" },
-  { Icon: Layers,    top: "40%", left: "2%",  size: 30, speed:  0.3,  rot:  12, tint: "from-emerald-400/30 to-teal-500/30" },
-  { Icon: Sparkles,  top: "44%", left: "90%", size: 32, speed: -0.4,  rot: -12, tint: "from-yellow-300/30 to-orange-500/30" },
-  { Icon: Code2,     top: "84%", left: "44%", size: 34, speed:  0.25, rot: -3,  tint: "from-sky-400/30 to-indigo-500/30" },
-  { Icon: Megaphone, top: "4%",  left: "44%", size: 32, speed: -0.25, rot:  4,  tint: "from-red-400/30 to-pink-500/30" },
-  { Icon: Brush,     top: "30%", left: "30%", size: 28, speed:  0.2,  rot:  -6, tint: "from-fuchsia-400/30 to-purple-500/30" },
-  { Icon: Type,      top: "78%", left: "22%", size: 30, speed: -0.3,  rot:  8,  tint: "from-lime-400/30 to-emerald-500/30" },
-  { Icon: Wand2,     top: "26%", left: "62%", size: 32, speed:  0.35, rot:  -5, tint: "from-indigo-400/30 to-violet-500/30" },
-  { Icon: Zap,       top: "56%", left: "70%", size: 28, speed: -0.28, rot:  9,  tint: "from-orange-400/30 to-amber-500/30" },
-];
-
-function FloatingIcon({
-  item,
-  index,
-  progress,
-  mouseX,
-  mouseY,
-}: {
-  item: IconItem;
-  index: number;
-  progress: ReturnType<typeof useScroll>["scrollYProgress"];
-  mouseX: ReturnType<typeof useSpring>;
-  mouseY: ReturnType<typeof useSpring>;
-}) {
-  const scrollY = useTransform(progress, [0, 1], [0, 600 * item.speed]);
-  const rotate = useTransform(progress, [0, 1], [item.rot, item.rot + item.speed * 20]);
-
-  // Each icon drifts with the cursor by an amount proportional to its own
-  // "speed" value, so icons already set up as different depth layers for
-  // scroll read as different depth layers on mouse move too.
-  const parallaxStrength = 26;
-  const x = useTransform(mouseX, (mx) => mx * item.speed * parallaxStrength);
-  const combinedY = useTransform([scrollY, mouseY], ([sy, my]) => (sy as number) + (my as number) * item.speed * parallaxStrength);
-
-  const { Icon } = item;
+// Wraps the primary CTA with a soft brand-colour glow and a handful of tiny
+// particles that drift inward on hover — enhancing the existing button
+// without changing its shape, size or copy.
+function MagneticCtaGlow({ children }: { children: ReactNode }) {
+  const [hovered, setHovered] = useState(false);
   return (
-    <motion.div
-      style={{ x, y: combinedY, rotate, top: item.top, left: item.left, width: item.size, height: item.size }}
-      initial={{ opacity: 0, scale: 0.6 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 1.6 + index * 0.06, duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
-      className="absolute pointer-events-auto float-y"
+    <div
+      className="relative inline-flex"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
     >
-      <div className={`group relative h-full w-full rounded-2xl border border-border/60 bg-gradient-to-br ${item.tint} backdrop-blur-md shadow-[0_10px_40px_-10px] shadow-primary/20 flex items-center justify-center transition-transform duration-500 hover:scale-110 hover:rotate-6`}>
-        <Icon className="h-1/2 w-1/2 text-foreground/90 transition-colors group-hover:text-primary" strokeWidth={1.5} />
-      </div>
-    </motion.div>
+      <AnimatePresence>
+        {hovered && (
+          <motion.div
+            aria-hidden
+            className="pointer-events-none absolute inset-0 -z-10 rounded-full blur-xl"
+            style={{ background: "radial-gradient(circle, rgba(159,190,0,0.35), rgba(139,92,246,0.18) 55%, transparent 75%)" }}
+            initial={{ opacity: 0, scale: 0.85 }}
+            animate={{ opacity: 1, scale: 1.18 }}
+            exit={{ opacity: 0, scale: 0.85 }}
+            transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
+          />
+        )}
+      </AnimatePresence>
+      {hovered && (
+        <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+          {CTA_PARTICLE_ANGLES.map((angle, i) => (
+            <motion.span
+              key={i}
+              className="absolute h-1 w-1 rounded-full bg-primary"
+              style={{ left: "50%", top: "50%" }}
+              initial={{ x: Math.cos(angle) * 56, y: Math.sin(angle) * 56, opacity: 0 }}
+              animate={{ x: 0, y: 0, opacity: [0, 1, 0] }}
+              transition={{ duration: 1.1, repeat: Infinity, delay: i * 0.13, ease: "easeIn" }}
+            />
+          ))}
+        </div>
+      )}
+      {children}
+    </div>
   );
 }
 
