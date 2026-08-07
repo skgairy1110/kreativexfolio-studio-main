@@ -6,12 +6,22 @@ import { RevealText } from "@/components/RevealText";
 import { MagneticButton } from "@/components/MagneticButton";
 import { useJson } from "@/hooks/use-json";
 import { dataPaths } from "@/utils/dataLoader";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { sendContactMessage } from "@/lib/api/contact.functions";
+
+type ContactField = {
+  name: string;
+  label: string;
+  type: string;
+  required?: boolean;
+  options?: string[];
+};
 
 type Contact = {
   intro: { eyebrow: string; headline: string; paragraph: string };
   channels: { label: string; value: string; href: string }[];
   locations: { city: string; address: string }[];
-  form: { fields: { name: string; label: string; type: string }[]; submitLabel: string; successMessage: string };
+  form: { fields: ContactField[]; submitLabel: string; successMessage: string };
 };
 
 export const Route = createFileRoute("/contact")({
@@ -27,14 +37,34 @@ export const Route = createFileRoute("/contact")({
 function ContactPage() {
   const { data } = useJson<Contact>(dataPaths.contact);
   const [sent, setSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [values, setValues] = useState<Record<string, string>>({});
-  const [focused, setFocused] = useState<string | null>(null);
 
   if (!data) return <div className="min-h-screen" />;
 
-  const onSubmit = (e: React.FormEvent) => {
+  const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSent(true);
+    setError(null);
+    setSubmitting(true);
+    try {
+      await sendContactMessage({
+        data: {
+          name: values.name || "",
+          company: values.company || "",
+          email: values.email || "",
+          projectType: values.projectType || "",
+          budget: values.budget || "",
+          timeline: values.timeline || "",
+          message: values.message || "",
+        },
+      });
+      setSent(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Something went wrong sending your message.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -91,60 +121,105 @@ function ContactPage() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0 }}
-                className="space-y-8"
+                className="relative overflow-hidden rounded-3xl border border-border bg-card/40 p-6 shadow-2xl shadow-black/20 backdrop-blur-xl sm:p-8 md:p-10"
               >
-                {data.form.fields.map((f) => {
-                  const isFocused = focused === f.name;
-                  const hasValue = !!values[f.name];
-                  const float = isFocused || hasValue;
-                  return (
-                    <div key={f.name} className="relative border-b border-border pt-6 pb-3">
-                      <label
-                        className={`absolute left-0 transition-all duration-300 pointer-events-none ${
-                          float ? "top-0 text-xs uppercase tracking-[0.25em] text-primary" : "top-7 text-base text-muted-foreground"
-                        }`}
-                      >
-                        {f.label}
-                      </label>
-                      {f.type === "textarea" ? (
-                        <textarea
-                          required
-                          rows={4}
-                          value={values[f.name] || ""}
-                          onChange={(e) => setValues((v) => ({ ...v, [f.name]: e.target.value }))}
-                          onFocus={() => setFocused(f.name)}
-                          onBlur={() => setFocused(null)}
-                          className="block w-full resize-none bg-transparent text-lg outline-none"
-                        />
-                      ) : (
-                        <input
-                          required
-                          type={f.type}
-                          value={values[f.name] || ""}
-                          onChange={(e) => setValues((v) => ({ ...v, [f.name]: e.target.value }))}
-                          onFocus={() => setFocused(f.name)}
-                          onBlur={() => setFocused(null)}
-                          className="block w-full bg-transparent text-lg outline-none"
-                        />
-                      )}
-                      <motion.span
-                        className="absolute bottom-0 left-0 h-px bg-primary"
-                        initial={false}
-                        animate={{ width: isFocused ? "100%" : "0%" }}
-                        transition={{ duration: 0.4, ease: [0.2, 0.8, 0.2, 1] }}
-                      />
-                    </div>
-                  );
-                })}
-                <MagneticButton strength={0.35}>
-                  <button
-                    type="submit"
-                    data-cursor-text="Send"
-                    className="btn-shine inline-flex items-center gap-3 rounded-full bg-primary px-8 py-4 text-sm uppercase tracking-[0.25em] text-primary-foreground hover:opacity-90 transition-opacity"
-                  >
-                    {data.form.submitLabel} <span aria-hidden>→</span>
-                  </button>
-                </MagneticButton>
+                {/* subtle glow accent */}
+                <div className="gradient-blob b3 pointer-events-none absolute -right-24 -top-24 h-64 w-64 opacity-30" />
+
+                <div className="relative grid grid-cols-1 gap-x-6 gap-y-7 sm:grid-cols-2">
+                  {data.form.fields.map((f) => {
+                    const isRequired = f.required !== false;
+                    const isFull = f.type === "textarea";
+                    const fieldBaseClass =
+                      "block w-full rounded-xl border border-input bg-background/40 px-4 py-3.5 text-base text-foreground placeholder:text-muted-foreground/50 outline-none transition-all duration-300 focus:border-primary focus:bg-background/70 focus:ring-2 focus:ring-primary/25";
+                    // Same box (border, padding, radius, height, focus states) as fieldBaseClass, but
+                    // keeps display:flex so the trigger text and chevron sit on one line, left-aligned.
+                    const selectTriggerClass =
+                      "flex h-auto w-full items-center justify-between rounded-xl border border-input bg-background/40 px-4 py-3.5 text-base text-foreground data-[placeholder]:text-muted-foreground/50 outline-none transition-all duration-300 focus:border-primary focus:bg-background/70 focus:ring-2 focus:ring-primary/25 [&>span]:text-left";
+
+                    return (
+                      <div key={f.name} className={`space-y-2 ${isFull ? "sm:col-span-2" : ""}`}>
+                        <label className="block text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
+                          {f.label}
+                          {isRequired && <span className="ml-1 text-primary">*</span>}
+                        </label>
+
+                        {f.type === "textarea" ? (
+                          <textarea
+                            required={isRequired}
+                            rows={5}
+                            value={values[f.name] || ""}
+                            onChange={(e) => setValues((v) => ({ ...v, [f.name]: e.target.value }))}
+                            placeholder="Share a few details about scope, goals and inspiration…"
+                            className={`${fieldBaseClass} resize-none`}
+                          />
+                        ) : f.type === "select" ? (
+                          <>
+                            <Select
+                              value={values[f.name] || ""}
+                              onValueChange={(val) => setValues((v) => ({ ...v, [f.name]: val }))}
+                            >
+                              <SelectTrigger className={selectTriggerClass}>
+                                <SelectValue placeholder={`Select ${f.label.toLowerCase()}`} />
+                              </SelectTrigger>
+                              <SelectContent className="rounded-xl border border-border bg-popover/95 backdrop-blur-xl">
+                                {f.options?.map((opt) => (
+                                  <SelectItem
+                                    key={opt}
+                                    value={opt}
+                                    className="cursor-pointer rounded-lg py-2.5 pl-3 pr-8 text-sm focus:bg-primary/15 focus:text-foreground"
+                                  >
+                                    {opt}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            {/* invisible field so native form validation covers the select */}
+                            <input
+                              tabIndex={-1}
+                              autoComplete="off"
+                              value={values[f.name] || ""}
+                              required={isRequired}
+                              onChange={() => {}}
+                              className="pointer-events-none absolute h-0 w-0 opacity-0"
+                            />
+                          </>
+                        ) : (
+                          <input
+                            required={isRequired}
+                            type={f.type}
+                            value={values[f.name] || ""}
+                            onChange={(e) => setValues((v) => ({ ...v, [f.name]: e.target.value }))}
+                            placeholder={f.label}
+                            className={fieldBaseClass}
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {error && (
+                  <p role="alert" className="relative mt-6 rounded-xl border border-destructive/40 bg-destructive/10 px-4 py-3 text-sm text-destructive">
+                    {error}
+                  </p>
+                )}
+
+                <div className="relative mt-9 flex items-center justify-between gap-6 border-t border-border pt-7">
+                  <p className="hidden text-xs text-muted-foreground sm:block">
+                    Fields marked <span className="text-primary">*</span> are required.
+                  </p>
+                  <MagneticButton strength={0.35}>
+                    <button
+                      type="submit"
+                      disabled={submitting}
+                      data-cursor-text="Send"
+                      className="btn-shine inline-flex items-center gap-3 rounded-full bg-primary px-8 py-4 text-sm uppercase tracking-[0.25em] text-primary-foreground transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {submitting ? "Sending…" : data.form.submitLabel} <span aria-hidden>→</span>
+                    </button>
+                  </MagneticButton>
+                </div>
               </motion.form>
             )}
           </AnimatePresence>
