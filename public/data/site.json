@@ -21,12 +21,11 @@
     "navigateLabel": "Navigate",
     "elsewhereLabel": "Elsewhere",
     "social": [
-      { "label": "Instagram", "href": "#" },
-      { "label": "Are.na", "href": "#" },
-      { "label": "LinkedIn", "href": "#" },
-      { "label": "Vimeo", "href": "#" }
+      { "label": "Linkedin", "href": "https://www.linkedin.com/company/gairystudio" },
+      { "label": "Instagram", "href": "https://www.instagram.com/gairystudio" },
+      { "label": "Facebook", "href": "https://www.facebook.com/gairystudio" }
     ],
     "copyright": "Gairy Studio — All rights reserved",
-    "locationsLine": "London · Lisbon"
+    "locationsLine": "Noida · Uttar Pradesh"
   }
 }
