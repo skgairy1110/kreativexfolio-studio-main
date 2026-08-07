@@ -5,7 +5,7 @@
     "paragraph": "Tell us about your project, your timeline and what success looks like. We respond within two business days."
   },
   "channels": [
-    { "label": "New business", "value": "shankargairy99@gmail.com", "href": "mailto:shankargairy99@gmail.com" },
+    { "label": "New business", "value": "gairystudio@gmail.com", "href": "mailto:gairystudio@gmail.com" },
     { "label": "Press", "value": "press@gairystudio.com", "href": "mailto:press@gairystudio.com" },
     { "label": "Careers", "value": "join@gairystudio.com", "href": "mailto:join@gairystudio.com" }
   ],
@@ -14,7 +14,7 @@
     { "city": "Lisbon", "address": "Rua da Boavista 84" }
   ],
   "form": {
-    "toEmail": "shankargairy99@gmail.com",
+    "toEmail": "gairystudio@gmail.com",
     "fields": [
       { "name": "name", "label": "Your name", "type": "text" },
       { "name": "company", "label": "Company / Brand", "type": "text", "required": false },

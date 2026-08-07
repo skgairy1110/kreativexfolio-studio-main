@@ -13,7 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 // way a plain PHP `mail()` contact form would. First submission triggers a
 // one-time "Activate your form" email to this address — click the link in
 // it once, and every submission after that is delivered automatically.
-const CONTACT_EMAIL = "shankargairy99@gmail.com";
+const CONTACT_EMAIL = "gairystudio@gmail.com";
 
 type ContactField = {
   name: string;
