@@ -1,7 +1,6 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { Menu, X } from "lucide-react";
 import { MagneticButton } from "@/components/MagneticButton";
 import { useJson } from "@/hooks/use-json";
 import { dataPaths } from "@/utils/dataLoader";
@@ -82,28 +81,42 @@ export function Navbar() {
             </Link>
           </MagneticButton>
 
-          {/* Desktop nav */}
-          <nav className="hidden md:flex items-center gap-2 text-sm">
+          {/* Desktop nav — minimal links with a two-line text-swap reveal
+              on hover, and a thin underline marking the active route. */}
+          <nav className="hidden md:flex items-center gap-1 text-sm">
             {site.navigation.map((l) => {
               const active = l.href === "/" ? path === "/" : path.startsWith(l.href);
               return (
-                <MagneticButton key={l.href} strength={0.3} className="relative">
-                  <Link
-                    to={l.href}
-                    className={`relative block px-4 py-2 uppercase tracking-[0.18em] transition-colors duration-300 ${
-                      active ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
-                    }`}
-                  >
-                    {active && (
-                      <motion.span
-                        layoutId="nav-active-pill"
-                        className="nav-pill"
-                        transition={{ type: "spring", stiffness: 380, damping: 32 }}
-                      />
-                    )}
-                    <span className="relative">{l.label}</span>
-                  </Link>
-                </MagneticButton>
+                <Link
+                  key={l.href}
+                  to={l.href}
+                  className="group relative flex items-center px-4 py-2"
+                >
+                  <span className="relative block h-[1.1em] overflow-hidden">
+                    <span
+                      className={`block uppercase tracking-[0.18em] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${
+                        active ? "-translate-y-full text-muted-foreground" : "text-muted-foreground group-hover:-translate-y-full"
+                      }`}
+                    >
+                      {l.label}
+                    </span>
+                    <span
+                      className={`absolute inset-0 block uppercase tracking-[0.18em] text-foreground transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${
+                        active ? "translate-y-0" : "translate-y-full group-hover:translate-y-0"
+                      }`}
+                    >
+                      {l.label}
+                    </span>
+                  </span>
+
+                  {active && (
+                    <motion.span
+                      layoutId="nav-active-underline"
+                      className="absolute bottom-0.5 left-4 right-4 h-px bg-primary"
+                      transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                    />
+                  )}
+                </Link>
               );
             })}
           </nav>
@@ -111,48 +124,44 @@ export function Navbar() {
           <MagneticButton strength={0.3} className="hidden md:inline-block">
             <Link
               to={site.navCta.href}
-              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-xs uppercase tracking-[0.2em] hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
+              className="group relative inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-foreground"
             >
               {site.navCta.label}
-              <span aria-hidden>→</span>
+              <span aria-hidden className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">
+                →
+              </span>
+              <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-primary transition-all duration-300 ease-out group-hover:w-full" />
             </Link>
           </MagneticButton>
 
-          {/* Mobile / tablet hamburger */}
-          <MagneticButton strength={0.35} className="md:hidden">
-            <button
-              type="button"
-              onClick={() => setOpen((o) => !o)}
-              aria-label={open ? "Close menu" : "Open menu"}
-              aria-expanded={open}
-              data-cursor-text={open ? "Close" : "Menu"}
-              className="flex h-11 w-11 items-center justify-center rounded-full border border-border"
-            >
-              <AnimatePresence mode="wait" initial={false}>
-                {open ? (
-                  <motion.span
-                    key="close"
-                    initial={{ opacity: 0, rotate: -45 }}
-                    animate={{ opacity: 1, rotate: 0 }}
-                    exit={{ opacity: 0, rotate: 45 }}
-                    transition={{ duration: 0.25 }}
-                  >
-                    <X className="h-5 w-5" strokeWidth={1.75} />
-                  </motion.span>
-                ) : (
-                  <motion.span
-                    key="menu"
-                    initial={{ opacity: 0, rotate: 45 }}
-                    animate={{ opacity: 1, rotate: 0 }}
-                    exit={{ opacity: 0, rotate: -45 }}
-                    transition={{ duration: 0.25 }}
-                  >
-                    <Menu className="h-5 w-5" strokeWidth={1.75} />
-                  </motion.span>
-                )}
-              </AnimatePresence>
-            </button>
-          </MagneticButton>
+          {/* Mobile / tablet hamburger — a plain, custom two-into-X mark
+              instead of an icon-library glyph. */}
+          <button
+            type="button"
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? "Close menu" : "Open menu"}
+            aria-expanded={open}
+            data-cursor-text={open ? "Close" : "Menu"}
+            className="flex h-11 w-11 items-center justify-center md:hidden"
+          >
+            <span className="relative block h-3.5 w-5">
+              <span
+                className={`absolute left-0 h-px w-full bg-foreground transition-all duration-300 ease-out ${
+                  open ? "top-1/2 -translate-y-1/2 rotate-45" : "top-0"
+                }`}
+              />
+              <span
+                className={`absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-foreground transition-opacity duration-200 ${
+                  open ? "opacity-0" : "opacity-100"
+                }`}
+              />
+              <span
+                className={`absolute left-0 h-px w-full bg-foreground transition-all duration-300 ease-out ${
+                  open ? "top-1/2 -translate-y-1/2 -rotate-45" : "bottom-0"
+                }`}
+              />
+            </span>
+          </button>
         </div>
       </motion.header>
 
