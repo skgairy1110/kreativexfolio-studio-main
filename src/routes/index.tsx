@@ -159,13 +159,13 @@ function Hero({ data }: { data: Home["hero"] }) {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 2.4, duration: 0.7 }}
-            className="flex items-center gap-4"
+            className="flex items-center gap-3 md:gap-4"
           >
             <MagneticCtaGlow>
               <MagneticButton>
                 <Link
                   to={data.cta.href as "/contact"}
-                  className="btn-shine inline-flex items-center gap-3 rounded-full bg-primary px-8 py-4 text-sm uppercase tracking-[0.2em] text-primary-foreground shadow-[0_20px_60px_-20px] shadow-primary/60"
+                  className="btn-shine inline-flex items-center gap-2 md:gap-3 whitespace-nowrap rounded-full bg-primary px-5 py-3 text-[11px] uppercase tracking-[0.1em] text-primary-foreground shadow-[0_20px_60px_-20px] shadow-primary/60 md:px-8 md:py-4 md:text-sm md:tracking-[0.2em]"
                 >
                   {data.cta.label}
                   <span aria-hidden>→</span>
@@ -175,7 +175,7 @@ function Hero({ data }: { data: Home["hero"] }) {
             <motion.div whileHover={{ x: 4 }} transition={{ type: "spring", stiffness: 300, damping: 20 }}>
               <Link
                 to={data.secondaryCta.href as "/work"}
-                className="story-link text-sm uppercase tracking-[0.2em]"
+                className="story-link whitespace-nowrap text-xs uppercase tracking-[0.15em] md:text-sm md:tracking-[0.2em]"
               >
                 {data.secondaryCta.label}
               </Link>

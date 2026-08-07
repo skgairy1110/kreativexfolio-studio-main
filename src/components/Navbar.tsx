@@ -204,13 +204,6 @@ export function Navbar() {
               transition={{ duration: 0.5, delay: 0.15 + site.navigation.length * 0.06 }}
               className="flex flex-col gap-6"
             >
-              <Link
-                to={site.navCta.href}
-                className="btn-shine inline-flex items-center justify-center gap-3 rounded-full bg-primary px-8 py-4 text-sm uppercase tracking-[0.2em] text-primary-foreground"
-              >
-                {site.navCta.label}
-                <span aria-hidden>→</span>
-              </Link>
               <span className="text-center text-xs uppercase tracking-[0.25em] text-muted-foreground">
                 {site.logo.text}
               </span>
