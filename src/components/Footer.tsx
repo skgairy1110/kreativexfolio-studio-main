@@ -7,7 +7,7 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-4">
           <div className="md:col-span-2">
             <p className="font-display text-4xl md:text-6xl leading-[1.05] tracking-tight">
-              Studio<span className="text-primary">.</span>
+              Gairy Studio<span className="text-primary">.</span>
             </p>
             <p className="mt-6 max-w-md text-muted-foreground">
               An independent design studio working with founders and brand leaders on the things that matter.
@@ -33,7 +33,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-16 flex flex-col gap-4 border-t border-border pt-6 text-xs uppercase tracking-[0.2em] text-muted-foreground md:flex-row md:items-center md:justify-between">
-          <span>© {new Date().getFullYear()} Studio — All rights reserved</span>
+          <span>© {new Date().getFullYear()} Gairy Studio — All rights reserved</span>
           <span>London · Lisbon</span>
         </div>
       </div>

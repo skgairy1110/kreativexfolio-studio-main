@@ -34,7 +34,7 @@ function ProjectPage() {
           <span>/</span>
           <span>{project.category}</span>
         </div>
-        <RevealText as="h1" className="mt-6 font-display text-gradient text-6xl md:text-[9vw] leading-[0.95] tracking-tight">
+        <RevealText as="h1" className="mt-6 font-display bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-300 via-violet-200 to-cyan-200 text-6xl md:text-[9vw] leading-[0.95] tracking-tight">
           {project.title}
         </RevealText>
         <div className="mt-10 grid gap-6 border-t border-border pt-6 md:grid-cols-4 text-sm">

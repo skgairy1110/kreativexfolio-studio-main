@@ -16,7 +16,7 @@ type Contact = {
 export const Route = createFileRoute("/contact")({
   head: () => ({
     meta: [
-      { title: "Contact — Studio" },
+      { title: "Contact — Gairy Studio" },
       { name: "description", content: "Start a project with our studio. We respond within two business days." },
     ],
   }),

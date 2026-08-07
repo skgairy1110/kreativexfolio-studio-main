@@ -21,6 +21,21 @@ export function RevealText({ children, className = "", delay = 0, as = "h2" }: P
   const text = typeof children === "string" ? children : "";
   const lines = text.split("\n");
   const Comp = motion[as];
+
+  // `background-clip: text` / gradient-fill utilities only work when applied
+  // directly to the element that owns the literal text glyphs. Here the real
+  // text sits two levels deep inside per-line "block overflow-hidden" wrapper
+  // spans (used for the wipe-reveal animation), so the outer heading element
+  // has no text of its own to clip a background to. Fill-related classes are
+  // routed to the inner span that actually contains the characters; layout /
+  // typographic classes (size, spacing, tracking, etc.) stay on the outer
+  // block-level element, since properties like font-size and letter-spacing
+  // are inherited down to the inner span regardless.
+  const classList = className.split(/\s+/).filter(Boolean);
+  const isFillClass = (c: string) => /^(bg-|from-|via-|to-)/.test(c) || c === "text-gradient" || c === "text-transparent";
+  const fillClasses = classList.filter(isFillClass).join(" ");
+  const layoutClasses = classList.filter((c) => !isFillClass(c)).join(" ");
+
   return (
     <Comp
       variants={container}
@@ -28,11 +43,11 @@ export function RevealText({ children, className = "", delay = 0, as = "h2" }: P
       whileInView="show"
       viewport={{ once: true, margin: "-10% 0px" }}
       transition={{ delay }}
-      className={className}
+      className={layoutClasses}
     >
       {lines.map((line, li) => (
         <span key={li} className="block overflow-hidden">
-          <motion.span variants={word} className="inline-block">
+          <motion.span variants={word} className={`inline-block ${fillClasses}`}>
             {line || "\u00A0"}
           </motion.span>
         </span>

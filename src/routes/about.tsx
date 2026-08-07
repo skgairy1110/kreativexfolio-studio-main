@@ -16,7 +16,7 @@ type About = {
 export const Route = createFileRoute("/about")({
   head: () => ({
     meta: [
-      { title: "Studio — About" },
+      { title: "Gairy Studio — About" },
       { name: "description", content: "An independent studio of designers, engineers and motion artists." },
     ],
   }),
@@ -80,7 +80,7 @@ function AboutPage() {
       <section className="mx-auto max-w-[1400px] px-6 pb-32 md:px-10">
         <div className="mb-12 flex items-end justify-between gap-6">
           <RevealText as="h2" className="font-display text-5xl md:text-7xl tracking-tight">
-            Studio.
+            Gairy Studio.
           </RevealText>
           <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">A senior team of {data.team.length}+ </span>
         </div>

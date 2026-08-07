@@ -22,9 +22,9 @@ export function Loader() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
-              className="font-display text-5xl md:text-7xl text-foreground"
+              className="font-display text-4xl md:text-6xl text-foreground"
             >
-              Studio
+              Gairy Studio
             </motion.span>
             <motion.span
               initial={{ width: 0 }}

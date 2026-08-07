@@ -13,7 +13,7 @@ type Services = {
 export const Route = createFileRoute("/services")({
   head: () => ({
     meta: [
-      { title: "Services — Studio" },
+      { title: "Services — Gairy Studio" },
       { name: "description", content: "Brand, web, product, motion and campaign services." },
     ],
   }),

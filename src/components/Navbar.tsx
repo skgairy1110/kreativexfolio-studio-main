@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const links = [
-  { to: "/", label: "Index" },
+  { to: "/", label: "Home" },
   { to: "/work", label: "Work" },
   { to: "/services", label: "Services" },
   { to: "/about", label: "Studio" },
@@ -32,7 +32,7 @@ export function Navbar() {
     >
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-5 md:px-10">
         <Link to="/" className="font-display text-2xl tracking-tight">
-          Studio<span className="text-primary">.</span>
+          Gairy Studio<span className="text-primary">.</span>
         </Link>
         <nav className="hidden md:flex items-center gap-8 text-sm">
           {links.map((l) => {

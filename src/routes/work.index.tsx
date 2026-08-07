@@ -15,7 +15,7 @@ type Work = { categories: string[]; projects: Project[] };
 export const Route = createFileRoute("/work/")({
   head: () => ({
     meta: [
-      { title: "Work — Studio" },
+      { title: "Work — Gairy Studio" },
       { name: "description", content: "Selected projects across brand, web, product, motion and campaigns." },
     ],
   }),
@@ -37,7 +37,7 @@ function WorkPage() {
     <PageWrap>
       <section className="mx-auto max-w-[1400px] px-6 md:px-10">
         <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Selected Work</span>
-        <RevealText as="h1" className="mt-6 font-display text-gradient text-6xl md:text-[10vw] leading-[0.95] tracking-tight">
+        <RevealText as="h1" className="mt-6 font-display bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-300 via-violet-200 to-cyan-200 text-6xl md:text-[10vw] leading-[0.95] tracking-tight">
           Things we've{"\n"}made.
         </RevealText>
 
