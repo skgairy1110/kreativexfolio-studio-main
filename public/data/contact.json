@@ -5,13 +5,12 @@
     "paragraph": "Tell us about your project, your timeline and what success looks like. We respond within two business days."
   },
   "channels": [
-    { "label": "New business", "value": "gairystudio@gmail.com", "href": "mailto:gairystudio@gmail.com" },
-    { "label": "Press", "value": "press@gairystudio.com", "href": "mailto:press@gairystudio.com" },
-    { "label": "Careers", "value": "join@gairystudio.com", "href": "mailto:join@gairystudio.com" }
+    { "label": "Email", "value": "gairystudio@gmail.com", "href": "mailto:gairystudio@gmail.com" },
+        { "label": "Contact", "value": "+91-836-826-3699", "href": "https://wa.me/+918368263699" }
+
   ],
   "locations": [
-    { "city": "London", "address": "12 Curtain Road, EC2A" },
-    { "city": "Lisbon", "address": "Rua da Boavista 84" }
+    { "city": "Noida", "address": "Sector 87, Phase-2" }
   ],
   "form": {
     "toEmail": "gairystudio@gmail.com",
