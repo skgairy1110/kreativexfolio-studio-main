@@ -1,0 +1,32 @@
+{
+  "logo": {
+    "image": "/logo.svg",
+    "alt": "Gairy Studio",
+    "text": "Gairy Studio",
+    "accent": "."
+  },
+  "navigation": [
+    { "label": "Home", "href": "/" },
+    { "label": "Work", "href": "/work" },
+    { "label": "Services", "href": "/services" },
+    { "label": "Studio", "href": "/about" },
+    { "label": "Contact", "href": "/contact" }
+  ],
+  "navCta": {
+    "label": "Start a project",
+    "href": "/contact"
+  },
+  "footer": {
+    "description": "An independent design studio working with founders and brand leaders on the things that matter.",
+    "navigateLabel": "Navigate",
+    "elsewhereLabel": "Elsewhere",
+    "social": [
+      { "label": "Instagram", "href": "#" },
+      { "label": "Are.na", "href": "#" },
+      { "label": "LinkedIn", "href": "#" },
+      { "label": "Vimeo", "href": "#" }
+    ],
+    "copyright": "Gairy Studio — All rights reserved",
+    "locationsLine": "London · Lisbon"
+  }
+}

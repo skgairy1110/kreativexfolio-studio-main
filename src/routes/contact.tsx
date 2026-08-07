@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { PageWrap } from "@/components/PageWrap";
 import { RevealText } from "@/components/RevealText";
+import { MagneticButton } from "@/components/MagneticButton";
 import { useJson } from "@/hooks/use-json";
 import { dataPaths } from "@/utils/dataLoader";
 
@@ -135,12 +136,15 @@ function ContactPage() {
                     </div>
                   );
                 })}
-                <button
-                  type="submit"
-                  className="inline-flex items-center gap-3 rounded-full bg-primary px-8 py-4 text-sm uppercase tracking-[0.25em] text-primary-foreground hover:opacity-90 transition-opacity"
-                >
-                  {data.form.submitLabel} <span aria-hidden>→</span>
-                </button>
+                <MagneticButton strength={0.35}>
+                  <button
+                    type="submit"
+                    data-cursor-text="Send"
+                    className="btn-shine inline-flex items-center gap-3 rounded-full bg-primary px-8 py-4 text-sm uppercase tracking-[0.25em] text-primary-foreground hover:opacity-90 transition-opacity"
+                  >
+                    {data.form.submitLabel} <span aria-hidden>→</span>
+                  </button>
+                </MagneticButton>
               </motion.form>
             )}
           </AnimatePresence>

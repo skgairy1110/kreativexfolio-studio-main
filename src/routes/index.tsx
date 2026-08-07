@@ -7,6 +7,7 @@ import { PageWrap } from "@/components/PageWrap";
 import { RevealText } from "@/components/RevealText";
 import { Marquee } from "@/components/Marquee";
 import { MagneticButton } from "@/components/MagneticButton";
+import { TiltCard } from "@/components/TiltCard";
 import { useJson } from "@/hooks/use-json";
 import { dataPaths } from "@/utils/dataLoader";
 
@@ -253,12 +254,14 @@ function Featured({ data }: { data: Home["featuredWork"] }) {
             transition={{ duration: 0.9, delay: i * 0.08, ease: [0.2, 0.8, 0.2, 1] }}
             className={i % 2 === 1 ? "md:translate-y-24" : ""}
           >
-            <Link to="/work/$slug" params={{ slug: p.slug }} className="block group lift">
-              <div className="gradient-border">
-                <div className="gb-inner media-hover aspect-[4/5] w-full">
-                  <img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover" />
+            <Link to="/work/$slug" params={{ slug: p.slug }} className="block group lift" data-cursor-text="View">
+              <TiltCard>
+                <div className="gradient-border">
+                  <div className="gb-inner media-hover aspect-[4/5] w-full">
+                    <img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover" />
+                  </div>
                 </div>
-              </div>
+              </TiltCard>
               <div className="mt-5 flex items-baseline justify-between">
                 <h3 className="font-display text-3xl md:text-4xl transition-colors group-hover:text-primary">{p.title}</h3>
                 <span className="text-xs uppercase tracking-[0.25em] text-muted-foreground">{p.category}</span>
@@ -317,7 +320,8 @@ function FooterCta({ data }: { data: Home["footerCta"] }) {
         <MagneticButton strength={0.45}>
           <Link
             to={data.cta.href as "/contact"}
-            className="inline-flex items-center gap-3 rounded-full bg-primary px-10 py-5 text-sm uppercase tracking-[0.25em] text-primary-foreground"
+            data-cursor-text="Go"
+            className="btn-shine inline-flex items-center gap-3 rounded-full bg-primary px-10 py-5 text-sm uppercase tracking-[0.25em] text-primary-foreground"
           >
             {data.cta.label} <span aria-hidden>→</span>
           </Link>

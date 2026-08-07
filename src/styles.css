@@ -41,19 +41,19 @@
   --card-foreground: oklch(0.98 0.003 270);
   --popover: oklch(0.17 0.006 270);
   --popover-foreground: oklch(0.98 0.003 270);
-  --primary: oklch(0.88 0.13 92);            /* warm chartreuse accent */
+  --primary: oklch(0.78 0.20 126);            /* warm chartreuse accent */
   --primary-foreground: oklch(0.14 0.005 270);
   --secondary: oklch(0.22 0.008 270);
   --secondary-foreground: oklch(0.98 0.003 270);
   --muted: oklch(0.22 0.008 270);
   --muted-foreground: oklch(0.68 0.012 270);
-  --accent: oklch(0.88 0.13 92);
+  --accent: oklch(0.78 0.20 126);
   --accent-foreground: oklch(0.14 0.005 270);
   --destructive: oklch(0.62 0.22 27);
   --destructive-foreground: oklch(0.98 0.003 270);
   --border: oklch(1 0 0 / 8%);
   --input: oklch(1 0 0 / 12%);
-  --ring: oklch(0.88 0.13 92 / 50%);
+  --ring: oklch(0.78 0.20 126 / 50%);
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   --font-sans: "Inter Tight", ui-sans-serif, system-ui, sans-serif;
 }
@@ -286,7 +286,7 @@
 }
 .lift:hover {
   transform: translateY(-6px);
-  box-shadow: 0 30px 60px -30px oklch(0.88 0.13 92 / 0.35);
+  box-shadow: 0 30px 60px -30px oklch(0.78 0.20 126 / 0.35);
 }
 
 .float-y { animation: float-y 5s ease-in-out infinite; }
@@ -364,3 +364,116 @@
   transition: opacity 0.2s ease;
 }
 .glitch-img:hover::after { opacity: 1; }
+
+/* ============ Cursor label / magnify states ============ */
+.cursor-ring[data-hover="true"] {
+  width: 64px; height: 64px;
+  border-color: var(--color-primary);
+}
+.cursor-ring[data-label]:not([data-label=""]) {
+  width: 88px; height: 88px;
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+}
+.cursor-label {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 9999;
+  pointer-events: none;
+  transform: translate3d(-200px, -200px, 0);
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-primary-foreground);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  white-space: nowrap;
+}
+
+/* ============ Scroll progress bar ============ */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  width: 100%;
+  transform-origin: 0% 50%;
+  background: linear-gradient(90deg, var(--color-primary), oklch(0.78 0.18 330));
+  z-index: 60;
+}
+
+/* ============ 3D tilt cards ============ */
+.tilt-card {
+  perspective: 1200px;
+}
+.tilt-card-inner {
+  transform-style: preserve-3d;
+  transition: transform 0.15s ease-out;
+  will-change: transform;
+}
+.tilt-glare {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(
+    circle at var(--gx, 50%) var(--gy, 50%),
+    rgba(255,255,255,0.25),
+    transparent 55%
+  );
+  mix-blend-mode: overlay;
+}
+.tilt-card:hover .tilt-glare { opacity: 1; }
+
+/* ============ Cursor-follow preview image ============ */
+.hover-preview {
+  position: fixed;
+  top: 0; left: 0;
+  z-index: 55;
+  width: 260px;
+  height: 340px;
+  border-radius: 14px;
+  overflow: hidden;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.hover-preview img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+}
+
+/* ============ Route transition curtain ============ */
+.route-curtain {
+  position: fixed;
+  inset: 0;
+  z-index: 9997;
+  background: var(--color-primary);
+  transform-origin: bottom;
+  pointer-events: none;
+}
+
+/* ============ Nav active pill / magnetic underline ============ */
+.nav-pill {
+  position: absolute;
+  inset: -8px -14px;
+  border-radius: 9999px;
+  background: var(--color-primary);
+  z-index: -1;
+}
+
+/* ============ Marquee hover pause ============ */
+.marquee-track[data-paused="true"] {
+  animation-play-state: paused;
+}
+
+/* ============ Back to top ============ */
+.back-to-top {
+  transition: transform 0.4s cubic-bezier(0.2,0.8,0.2,1), background 0.3s ease, border-color 0.3s ease;
+}
+.back-to-top:hover {
+  transform: translateY(-4px) rotate(-45deg);
+}

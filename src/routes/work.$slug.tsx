@@ -101,7 +101,7 @@ function ProjectPage() {
 
       {/* Next */}
       <section className="border-t border-border">
-        <Link to="/work" className="block py-20 text-center group">
+        <Link to="/work" className="block py-20 text-center group" data-cursor-text="Browse">
           <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Browse</span>
           <div className="mt-4 font-display text-5xl md:text-7xl tracking-tight group-hover:text-primary transition-colors">
             All projects →

@@ -14,6 +14,8 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { CustomCursor } from "@/components/CustomCursor";
 import { Loader } from "@/components/Loader";
+import { ScrollProgress } from "@/components/ScrollProgress";
+import { RouteTransition } from "@/components/RouteTransition";
 
 function NotFoundComponent() {
   return (
@@ -92,7 +94,9 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       <Loader />
+      <RouteTransition />
       <CustomCursor />
+      <ScrollProgress />
       <Navbar />
       <Outlet />
       <Footer />

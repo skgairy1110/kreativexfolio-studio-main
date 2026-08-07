@@ -5,6 +5,7 @@ export async function loadData<T = unknown>(path: string): Promise<T> {
 }
 
 export const dataPaths = {
+  site: "/data/site.json",
   home: "/data/home.json",
   about: "/data/about.json",
   work: "/data/work.json",

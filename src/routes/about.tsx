@@ -5,6 +5,7 @@ import { PageWrap } from "@/components/PageWrap";
 import { RevealText } from "@/components/RevealText";
 import { useCountUp, useJson } from "@/hooks/use-json";
 import { dataPaths } from "@/utils/dataLoader";
+import { TiltCard } from "@/components/TiltCard";
 
 type About = {
   intro: { eyebrow: string; headline: string; paragraph: string };
@@ -93,9 +94,11 @@ function AboutPage() {
               viewport={{ once: true }}
               transition={{ duration: 0.7, delay: i * 0.06 }}
             >
-              <div className="media-hover aspect-[3/4] w-full bg-card">
-                <img src={m.image} alt={m.name} loading="lazy" className="h-full w-full object-cover" />
-              </div>
+              <TiltCard max={6}>
+                <div className="media-hover aspect-[3/4] w-full rounded-xl bg-card">
+                  <img src={m.image} alt={m.name} loading="lazy" className="h-full w-full rounded-xl object-cover" />
+                </div>
+              </TiltCard>
               <h3 className="mt-4 font-display text-2xl">{m.name}</h3>
               <p className="text-xs uppercase tracking-[0.25em] text-muted-foreground">{m.role}</p>
             </motion.div>

@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useMemo, useState } from "react";
 import { PageWrap } from "@/components/PageWrap";
 import { RevealText } from "@/components/RevealText";
+import { TiltCard } from "@/components/TiltCard";
 import { useJson } from "@/hooks/use-json";
 import { dataPaths } from "@/utils/dataLoader";
 
@@ -79,12 +80,14 @@ function WorkPage() {
                 transition={{ duration: 0.55, delay: (i % 4) * 0.05, ease: [0.2, 0.8, 0.2, 1] }}
                 className={i % 2 === 1 ? "md:translate-y-20" : ""}
               >
-                <Link to="/work/$slug" params={{ slug: p.slug }} className="group block lift">
-                  <div className="gradient-border">
-                    <div className="gb-inner media-hover aspect-[4/5] w-full">
-                      <img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover" />
+                <Link to="/work/$slug" params={{ slug: p.slug }} className="group block lift" data-cursor-text="View">
+                  <TiltCard>
+                    <div className="gradient-border">
+                      <div className="gb-inner media-hover aspect-[4/5] w-full">
+                        <img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover" />
+                      </div>
                     </div>
-                  </div>
+                  </TiltCard>
                   <div className="mt-5 flex items-baseline justify-between gap-6">
                     <div>
                       <h3 className="font-display text-3xl md:text-4xl transition-colors group-hover:text-primary">{p.title}</h3>
