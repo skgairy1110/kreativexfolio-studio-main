@@ -8,8 +8,12 @@ import { useJson } from "@/hooks/use-json";
 import { dataPaths } from "@/utils/dataLoader";
 
 type Project = {
-  slug: string; title: string; category: string; image: string;
-  client: string; year: string;
+  slug: string;
+  title: string;
+  category: string;
+  image: string;
+  client: string;
+  year: string;
 };
 type Work = { categories: string[]; projects: Project[] };
 
@@ -17,7 +21,10 @@ export const Route = createFileRoute("/work/")({
   head: () => ({
     meta: [
       { title: "Work — Gairy Studio" },
-      { name: "description", content: "Selected projects across brand, web, product, motion and campaigns." },
+      {
+        name: "description",
+        content: "Selected projects across UI/UX, web, branding, motion and social.",
+      },
     ],
   }),
   component: WorkPage,
@@ -37,8 +44,13 @@ function WorkPage() {
   return (
     <PageWrap>
       <section className="mx-auto max-w-[1400px] px-6 md:px-10">
-        <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Selected Work</span>
-        <RevealText as="h1" className="mt-6 font-display bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-300 via-violet-200 to-cyan-200 text-6xl md:text-[10vw] leading-[0.95] tracking-tight">
+        <span className="text-xs uppercase tracking-[0.3em] text-muted-foreground">
+          Selected Work
+        </span>
+        <RevealText
+          as="h1"
+          className="mt-6 font-display bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-300 via-primary to-cyan-200 text-6xl md:text-[10vw] leading-[0.95] tracking-tight"
+        >
           Things we've{"\n"}made.
         </RevealText>
 
@@ -51,7 +63,9 @@ function WorkPage() {
                 key={c}
                 onClick={() => setActive(c)}
                 className={`relative rounded-full px-5 py-2 text-xs uppercase tracking-[0.2em] transition-colors ${
-                  isActive ? "text-primary-foreground" : "text-muted-foreground hover:text-foreground"
+                  isActive
+                    ? "text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 {isActive && (
@@ -80,22 +94,36 @@ function WorkPage() {
                 transition={{ duration: 0.55, delay: (i % 4) * 0.05, ease: [0.2, 0.8, 0.2, 1] }}
                 className={i % 2 === 1 ? "md:translate-y-20" : ""}
               >
-                <Link to="/work/$slug" params={{ slug: p.slug }} className="group block lift" data-cursor-text="View">
+                <Link
+                  to="/work/$slug"
+                  params={{ slug: p.slug }}
+                  className="group block lift"
+                  data-cursor-text="View"
+                >
                   <TiltCard>
                     <div className="gradient-border">
                       <div className="gb-inner media-hover aspect-[4/5] w-full">
-                        <img src={p.image} alt={p.title} loading="lazy" className="h-full w-full object-cover" />
+                        <img
+                          src={p.image}
+                          alt={p.title}
+                          loading="lazy"
+                          className="h-full w-full object-cover"
+                        />
                       </div>
                     </div>
                   </TiltCard>
                   <div className="mt-5 flex items-baseline justify-between gap-6">
                     <div>
-                      <h3 className="font-display text-3xl md:text-4xl transition-colors group-hover:text-primary">{p.title}</h3>
+                      <h3 className="font-display text-3xl md:text-4xl transition-colors group-hover:text-primary">
+                        {p.title}
+                      </h3>
                       <p className="mt-1 text-xs uppercase tracking-[0.25em] text-muted-foreground">
                         {p.client} · {p.year}
                       </p>
                     </div>
-                    <span className="text-xs uppercase tracking-[0.25em] text-muted-foreground">{p.category}</span>
+                    <span className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+                      {p.category}
+                    </span>
                   </div>
                 </Link>
               </motion.div>

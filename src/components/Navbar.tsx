@@ -1,6 +1,5 @@
-import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { MagneticButton } from "@/components/MagneticButton";
 import { useJson } from "@/hooks/use-json";
 import { dataPaths } from "@/utils/dataLoader";
@@ -9,20 +8,19 @@ type NavLink = { label: string; href: string };
 type Site = {
   logo: { image?: string; alt: string; text: string; accent: string };
   navigation: NavLink[];
-  navCta: { label: string; href: string };
+  navCta: NavLink;
 };
 
 // Sensible defaults so the nav never flashes empty while /data/site.json loads.
 const FALLBACK: Site = {
   logo: { image: "/logo.svg", alt: "Gairy Studio", text: "Gairy Studio", accent: "." },
   navigation: [
-    { label: "Home", href: "/" },
-    { label: "Work", href: "/work" },
-    { label: "Services", href: "/services" },
-    { label: "About us", href: "/about" },
-    { label: "Contact", href: "/contact" },
+    { label: "Work", href: "/#work" },
+    { label: "Services", href: "/#services" },
+    { label: "Team", href: "/#team" },
+    { label: "Story", href: "/#story" },
   ],
-  navCta: { label: "Start a project", href: "/contact" },
+  navCta: { label: "Book a meeting", href: "/#contact" },
 };
 
 export function Navbar() {
@@ -31,7 +29,7 @@ export function Navbar() {
 
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const path = useRouterState({ select: (s) => s.location.pathname });
+  const [activeHash, setActiveHash] = useState<string>("");
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -40,10 +38,24 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close the mobile menu whenever the route changes.
+  // Scrollspy — highlight whichever section anchor is currently in view,
+  // so the underline tracks scroll position on this single long page.
   useEffect(() => {
-    setOpen(false);
-  }, [path]);
+    const ids = site.navigation.map((l) => l.href.split("#")[1]).filter(Boolean);
+    const sections = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveHash(`#${entry.target.id}`);
+        });
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
+    );
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
+  }, [site.navigation]);
 
   // Lock body scroll while the mobile menu is open.
   useEffect(() => {
@@ -52,6 +64,8 @@ export function Navbar() {
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  const closeMenu = () => setOpen(false);
 
   return (
     <>
@@ -69,7 +83,7 @@ export function Navbar() {
           }`}
         >
           <MagneticButton strength={0.25}>
-            <Link to="/" className="flex items-center">
+            <a href="/" className="flex items-center">
               {site.logo.image ? (
                 <img src={site.logo.image} alt={site.logo.alt} className="h-7 md:h-8 w-auto" />
               ) : (
@@ -78,24 +92,26 @@ export function Navbar() {
                   <span className="text-primary">{site.logo.accent}</span>
                 </span>
               )}
-            </Link>
+            </a>
           </MagneticButton>
 
           {/* Desktop nav — minimal links with a two-line text-swap reveal
-              on hover, and a thin underline marking the active route. */}
+              on hover, and a thin underline marking the section in view. */}
           <nav className="hidden md:flex items-center gap-1 text-sm">
             {site.navigation.map((l) => {
-              const active = l.href === "/" ? path === "/" : path.startsWith(l.href);
+              const active = activeHash === `#${l.href.split("#")[1]}`;
               return (
-                <Link
+                <a
                   key={l.href}
-                  to={l.href}
+                  href={l.href}
                   className="group relative flex items-center px-4 py-2"
                 >
                   <span className="relative block h-[1.1em] overflow-hidden">
                     <span
                       className={`block uppercase tracking-[0.18em] transition-transform duration-500 ease-[cubic-bezier(0.76,0,0.24,1)] ${
-                        active ? "-translate-y-full text-muted-foreground" : "text-muted-foreground group-hover:-translate-y-full"
+                        active
+                          ? "-translate-y-full text-muted-foreground"
+                          : "text-muted-foreground group-hover:-translate-y-full"
                       }`}
                     >
                       {l.label}
@@ -116,22 +132,25 @@ export function Navbar() {
                       transition={{ type: "spring", stiffness: 420, damping: 32 }}
                     />
                   )}
-                </Link>
+                </a>
               );
             })}
           </nav>
 
           <MagneticButton strength={0.3} className="hidden md:inline-block">
-            <Link
-              to={site.navCta.href}
+            <a
+              href={site.navCta.href}
               className="group relative inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-foreground"
             >
               {site.navCta.label}
-              <span aria-hidden className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1">
+              <span
+                aria-hidden
+                className="inline-block transition-transform duration-300 ease-out group-hover:translate-x-1"
+              >
                 →
               </span>
               <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-primary transition-all duration-300 ease-out group-hover:w-full" />
-            </Link>
+            </a>
           </MagneticButton>
 
           {/* Mobile / tablet hamburger — a plain, custom two-into-X mark
@@ -177,7 +196,7 @@ export function Navbar() {
           >
             <nav className="flex flex-col gap-2">
               {site.navigation.map((l, i) => {
-                const active = l.href === "/" ? path === "/" : path.startsWith(l.href);
+                const active = activeHash === `#${l.href.split("#")[1]}`;
                 return (
                   <motion.div
                     key={l.href}
@@ -185,23 +204,41 @@ export function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5, delay: 0.15 + i * 0.06, ease: [0.2, 0.8, 0.2, 1] }}
                   >
-                    <Link
-                      to={l.href}
+                    <a
+                      href={l.href}
+                      onClick={closeMenu}
                       className={`block border-b border-border py-4 font-display text-4xl tracking-tight transition-colors ${
                         active ? "text-primary" : "text-foreground"
                       }`}
                     >
                       {l.label}
-                    </Link>
+                    </a>
                   </motion.div>
                 );
               })}
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.15 + site.navigation.length * 0.06,
+                  ease: [0.2, 0.8, 0.2, 1],
+                }}
+              >
+                <a
+                  href={site.navCta.href}
+                  onClick={closeMenu}
+                  className="block border-b border-border py-4 font-display text-4xl tracking-tight text-primary"
+                >
+                  {site.navCta.label}
+                </a>
+              </motion.div>
             </nav>
 
             <motion.div
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.15 + site.navigation.length * 0.06 }}
+              transition={{ duration: 0.5, delay: 0.15 + (site.navigation.length + 1) * 0.06 }}
               className="flex flex-col gap-6"
             >
               <span className="text-center text-xs uppercase tracking-[0.25em] text-muted-foreground">

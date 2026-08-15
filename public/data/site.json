@@ -6,15 +6,14 @@
     "accent": "."
   },
   "navigation": [
-    { "label": "Home", "href": "/" },
-    { "label": "Work", "href": "/work" },
-    { "label": "Services", "href": "/services" },
-    { "label": "About us", "href": "/about" },
-    { "label": "Contact", "href": "/contact" }
+    { "label": "Work", "href": "/#work" },
+    { "label": "Services", "href": "/#services" },
+    { "label": "Team", "href": "/#team" },
+    { "label": "Story", "href": "/#story" }
   ],
   "navCta": {
-    "label": "Start a project",
-    "href": "/contact"
+    "label": "Book a meeting",
+    "href": "/#contact"
   },
   "footer": {
     "description": "An independent design studio working with founders and brand leaders on the things that matter.",

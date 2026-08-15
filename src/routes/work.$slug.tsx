@@ -6,8 +6,13 @@ import { useJson } from "@/hooks/use-json";
 import { dataPaths } from "@/utils/dataLoader";
 
 type Project = {
-  slug: string; title: string; category: string; image: string;
-  client: string; year: string; description: string;
+  slug: string;
+  title: string;
+  category: string;
+  image: string;
+  client: string;
+  year: string;
+  description: string;
   sections: { challenge: string; solution: string; result: string };
   gallery: string[];
 };
@@ -30,18 +35,38 @@ function ProjectPage() {
       {/* Hero */}
       <section className="mx-auto max-w-[1400px] px-6 md:px-10">
         <div className="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-muted-foreground">
-          <Link to="/work" className="story-link">Work</Link>
+          <Link to="/work" className="story-link">
+            Work
+          </Link>
           <span>/</span>
           <span>{project.category}</span>
         </div>
-        <RevealText as="h1" className="mt-6 font-display bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-300 via-violet-200 to-cyan-200 text-6xl md:text-[9vw] leading-[0.95] tracking-tight">
+        <RevealText
+          as="h1"
+          className="mt-6 font-display bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-300 via-primary to-cyan-200 text-6xl md:text-[9vw] leading-[0.95] tracking-tight"
+        >
           {project.title}
         </RevealText>
         <div className="mt-10 grid gap-6 border-t border-border pt-6 md:grid-cols-4 text-sm">
-          <div><div className="text-xs uppercase tracking-[0.25em] text-muted-foreground">Client</div><div className="mt-2">{project.client}</div></div>
-          <div><div className="text-xs uppercase tracking-[0.25em] text-muted-foreground">Year</div><div className="mt-2">{project.year}</div></div>
-          <div><div className="text-xs uppercase tracking-[0.25em] text-muted-foreground">Discipline</div><div className="mt-2">{project.category}</div></div>
-          <div className="md:text-right"><Link to="/contact" className="story-link uppercase tracking-[0.25em]">Start a project →</Link></div>
+          <div>
+            <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground">Client</div>
+            <div className="mt-2">{project.client}</div>
+          </div>
+          <div>
+            <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground">Year</div>
+            <div className="mt-2">{project.year}</div>
+          </div>
+          <div>
+            <div className="text-xs uppercase tracking-[0.25em] text-muted-foreground">
+              Discipline
+            </div>
+            <div className="mt-2">{project.category}</div>
+          </div>
+          <div className="md:text-right">
+            <a href="/#contact" className="story-link uppercase tracking-[0.25em]">
+              Start a project →
+            </a>
+          </div>
         </div>
       </section>
 
@@ -58,7 +83,10 @@ function ProjectPage() {
 
       {/* Story sections */}
       <section className="mx-auto max-w-[1100px] px-6 py-24 md:py-40 md:px-10">
-        <RevealText as="p" className="font-display text-3xl md:text-5xl leading-[1.1] tracking-tight">
+        <RevealText
+          as="p"
+          className="font-display text-3xl md:text-5xl leading-[1.1] tracking-tight"
+        >
           {project.description}
         </RevealText>
 

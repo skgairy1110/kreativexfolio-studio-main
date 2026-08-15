@@ -7,11 +7,12 @@
       "category": "Website",
       "client": "Lumen Labs",
       "year": "2025",
+      "featured": true,
       "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600&q=80",
-      "description": "A marketing site for a next-generation operating system, built around a kinetic type system and WebGL hero.",
+      "description": "A marketing site for a next-generation operating system, built around a kinetic type system and an interactive hero.",
       "sections": {
         "challenge": "Lumen needed a launch site that signalled platform ambition without falling into generic SaaS tropes.",
-        "solution": "We built a kinetic identity, a custom typography stack and a WebGL hero that reacts to the user's cursor.",
+        "solution": "We built a kinetic identity, a custom typography stack and an interactive hero that reacts to the user's cursor.",
         "result": "Launch week traffic exceeded targets by 240% and the site was featured across major design publications."
       },
       "gallery": [
@@ -26,6 +27,7 @@
       "category": "UI/UX",
       "client": "Nova",
       "year": "2025",
+      "featured": true,
       "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&q=80",
       "description": "A complete product redesign for a fintech challenger bank, focused on clarity and trust.",
       "sections": {
@@ -45,6 +47,7 @@
       "category": "Video",
       "client": "Atlas Studio",
       "year": "2024",
+      "featured": true,
       "image": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?w=1600&q=80",
       "description": "A title sequence and brand film for a documentary series exploring modern cartography.",
       "sections": {
@@ -64,6 +67,7 @@
       "category": "Social Media",
       "client": "Ember",
       "year": "2024",
+      "featured": true,
       "image": "https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=1600&q=80",
       "description": "A year-long social system for a fast-growing lifestyle brand across Instagram and TikTok.",
       "sections": {
@@ -83,6 +87,7 @@
       "category": "Ads",
       "client": "Vox Audio",
       "year": "2024",
+      "featured": false,
       "image": "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=1600&q=80",
       "description": "A multi-channel paid campaign for the launch of a flagship pair of studio headphones.",
       "sections": {
@@ -102,6 +107,7 @@
       "category": "Website",
       "client": "Harbor Co.",
       "year": "2023",
+      "featured": false,
       "image": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80",
       "description": "An editorial website for a coastal hospitality brand, built around long-form storytelling.",
       "sections": {
@@ -121,6 +127,7 @@
       "category": "UI/UX",
       "client": "Kite",
       "year": "2023",
+      "featured": false,
       "image": "https://images.unsplash.com/photo-1512486130939-2c4f79935e4f?w=1600&q=80",
       "description": "Product design for a calm productivity tool aimed at independent makers.",
       "sections": {
@@ -140,6 +147,7 @@
       "category": "Video",
       "client": "Forma",
       "year": "2023",
+      "featured": false,
       "image": "https://images.unsplash.com/photo-1485846234645-a62644f84728?w=1600&q=80",
       "description": "A brand film for an architectural practice known for adaptive reuse projects.",
       "sections": {

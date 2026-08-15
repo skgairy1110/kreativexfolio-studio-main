@@ -1,4 +1,3 @@
-import { Link } from "@tanstack/react-router";
 import { ArrowUp } from "lucide-react";
 import { MagneticButton } from "@/components/MagneticButton";
 import { useJson } from "@/hooks/use-json";
@@ -21,10 +20,11 @@ type Site = {
 const FALLBACK: Site = {
   logo: { image: "/logo.svg", alt: "Gairy Studio", text: "Gairy Studio", accent: "." },
   navigation: [
-    { label: "Work", href: "/work" },
-    { label: "Services", href: "/services" },
-    { label: "Studio", href: "/about" },
-    { label: "Contact", href: "/contact" },
+    { label: "Work", href: "/#work" },
+    { label: "Services", href: "/#services" },
+    { label: "Team", href: "/#team" },
+    { label: "Story", href: "/#story" },
+    { label: "Contact", href: "/#contact" },
   ],
   footer: {
     description:
@@ -45,7 +45,9 @@ const FALLBACK: Site = {
 export function Footer() {
   const { data } = useJson<Site>(dataPaths.site);
   const site = data ?? FALLBACK;
-  const navLinks = site.navigation.filter((l) => l.href !== "/");
+  const navLinks = [...site.navigation, { label: "Contact", href: "/#contact" }].filter(
+    (l, i, arr) => arr.findIndex((x) => x.href === l.href) === i,
+  );
 
   const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
@@ -71,9 +73,9 @@ export function Footer() {
             <ul className="mt-4 space-y-2 text-sm">
               {navLinks.map((l) => (
                 <li key={l.href}>
-                  <Link to={l.href} className="story-link">
+                  <a href={l.href} className="story-link">
                     {l.label}
-                  </Link>
+                  </a>
                 </li>
               ))}
             </ul>

@@ -135,6 +135,37 @@
   animation: marquee-x 10s linear infinite;
   will-change: transform;
 }
+.marquee-track-slow {
+  animation: marquee-x 34s linear infinite;
+  will-change: transform;
+}
+.marquee-track[data-paused="true"],
+.marquee-track-slow[data-paused="true"] {
+  animation-play-state: paused;
+}
+
+/* Orbit rings behind the "we are a team" stats — slow independent spins */
+@keyframes orbit-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes orbit-spin-reverse {
+  to { transform: rotate(-360deg); }
+}
+.orbit-ring {
+  position: absolute;
+  border-radius: 9999px;
+  border: 1px dashed oklch(1 0 0 / 10%);
+}
+.orbit-ring.outer { animation: orbit-spin 60s linear infinite; }
+.orbit-ring.inner { animation: orbit-spin-reverse 40s linear infinite; border-color: oklch(0.78 0.20 126 / 25%); }
+.orbit-dot {
+  position: absolute;
+  top: -4px; left: 50%;
+  width: 8px; height: 8px;
+  border-radius: 9999px;
+  background: var(--color-primary);
+  box-shadow: 0 0 12px 2px oklch(0.78 0.20 126 / 60%);
+}
 
 /* Noise overlay */
 .noise::before {
@@ -290,6 +321,49 @@
 }
 
 .float-y { animation: float-y 5s ease-in-out infinite; }
+
+/* Fades the left/right edges of a horizontally-scrolling row to transparent,
+   so looping content never looks like it's clipping mid-shape. */
+.edge-fade-x {
+  mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 8%, black 92%, transparent 100%);
+}
+
+/* Hero — faint slow-panning grid layered under the galaxy canvas, adds a
+   second, much slower plane of ambient motion behind the headline. */
+@keyframes grid-pan {
+  0% { background-position: 0 0; }
+  100% { background-position: 120px 120px; }
+}
+.hero-grid {
+  background-image:
+    linear-gradient(oklch(1 0 0 / 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, oklch(1 0 0 / 0.04) 1px, transparent 1px);
+  background-size: 64px 64px;
+  animation: grid-pan 46s linear infinite;
+}
+
+/* Hero — service-tag pills brighten and lift on hover instead of sitting static */
+.tag-pill {
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease,
+    color 0.4s ease,
+    transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.tag-pill:hover {
+  background-color: oklch(0.78 0.2 126 / 0.12);
+  border-color: oklch(0.78 0.2 126 / 0.5);
+  color: var(--color-foreground);
+  transform: translateY(-2px);
+}
+
+/* Hero — eyebrow status pill's slow breathing dot */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 oklch(0.78 0.2 126 / 0.55); }
+  50% { opacity: 0.6; box-shadow: 0 0 0 5px oklch(0.78 0.2 126 / 0); }
+}
+.pulse-dot { animation: pulse-dot 2.6s ease-in-out infinite; }
 
 /* Shiny button sweep */
 .btn-shine { position: relative; overflow: hidden; }
