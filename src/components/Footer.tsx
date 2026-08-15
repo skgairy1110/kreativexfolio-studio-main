@@ -60,10 +60,20 @@ export function Footer() {
       <div className="relative mx-auto max-w-[1400px] px-6 py-16 md:px-10 md:py-24">
         <div className="grid gap-12 md:grid-cols-4">
           <div className="md:col-span-2">
-            <p className="font-display text-4xl md:text-6xl leading-[1.05] tracking-tight">
-              {site.logo.text}
-              <span className="text-primary">{site.logo.accent}</span>
-            </p>
+            {site.logo.image ? (
+              <a href="/" className="inline-block">
+                <img
+                  src={site.logo.image}
+                  alt={site.logo.alt}
+                  className="h-10 md:h-14 w-auto"
+                />
+              </a>
+            ) : (
+              <p className="font-display text-4xl md:text-6xl leading-[1.05] tracking-tight">
+                {site.logo.text}
+                <span className="text-primary">{site.logo.accent}</span>
+              </p>
+            )}
             <p className="mt-6 max-w-md text-muted-foreground">{site.footer.description}</p>
           </div>
           <div>
