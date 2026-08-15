@@ -263,7 +263,7 @@ function Hero({ data }: { data: Hero }) {
           <RevealText
             as="h1"
             delay={1.5}
-            className="font-display bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-300 via-primary to-cyan-200 text-[15vw] md:text-[7.4vw] leading-[0.92] tracking-tight"
+            className="font-display bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-300 via-primary to-cyan-200 text-[15vw] md:text-[6vw] leading-[0.92] tracking-tight"
           >
             {data.title}
           </RevealText>
