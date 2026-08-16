@@ -98,11 +98,11 @@ const CONTACT_EMAIL = "gairystudio@gmail.com";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Gairy Studio — Independent Design Studio" },
+      { title: "Gairy Studio — Brand, Digital & Visual Design" },
       {
         name: "description",
         content:
-          "Gairy Studio is an independent creative and digital agency crafting UI/UX, web design & development, branding, motion and social for ambitious brands.",
+          "An independent creative studio building bold brands, digital experiences and visual stories.",
       },
     ],
     links: [{ rel: "canonical", href: "https://gairystudio.com/" }],
