@@ -81,7 +81,37 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="dark">
-      <head><HeadContent /></head>
+      <head>
+        <HeadContent />
+        {/* Organization structured data (JSON-LD) for richer Google search results.
+            Static data mirroring public/data/site.json — update both if the
+            studio's contact/social details change. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Organization",
+              name: "Gairy Studio",
+              url: "https://gairystudio.com",
+              logo: "https://gairystudio.com/logo.svg",
+              description:
+                "An independent design studio working with founders and brand leaders on brand, web, motion and digital product.",
+              address: {
+                "@type": "PostalAddress",
+                addressLocality: "Noida",
+                addressRegion: "Uttar Pradesh",
+                addressCountry: "IN",
+              },
+              sameAs: [
+                "https://www.linkedin.com/company/gairystudio",
+                "https://www.instagram.com/gairystudio",
+                "https://www.facebook.com/gairystudio",
+              ],
+            }),
+          }}
+        />
+      </head>
       <body>
         {children}
         <Scripts />

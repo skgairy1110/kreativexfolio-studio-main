@@ -26,6 +26,7 @@ export const Route = createFileRoute("/work/")({
         content: "Selected projects across UI/UX, web, branding, motion and social.",
       },
     ],
+    links: [{ rel: "canonical", href: "https://gairystudio.com/work" }],
   }),
   component: WorkPage,
 });

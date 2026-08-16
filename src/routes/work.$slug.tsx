@@ -4,6 +4,11 @@ import { PageWrap } from "@/components/PageWrap";
 import { RevealText } from "@/components/RevealText";
 import { useJson } from "@/hooks/use-json";
 import { dataPaths } from "@/utils/dataLoader";
+// Static import (bundled at build time) purely so `head()` can generate
+// unique per-project SEO tags server-side. The page itself still renders
+// from the live client-side fetch below via useJson, so editing
+// public/data/work.json and redeploying keeps both in sync.
+import workJson from "../../public/data/work.json";
 
 type Project = {
   slug: string;
@@ -19,6 +24,31 @@ type Project = {
 type Work = { projects: Project[] };
 
 export const Route = createFileRoute("/work/$slug")({
+  loader: ({ params }) => {
+    const project = (workJson as Work).projects.find((p) => p.slug === params.slug);
+    if (!project) throw notFound();
+    return project;
+  },
+  head: ({ loaderData, params }) => {
+    if (!loaderData) return {};
+    const title = `${loaderData.title} — Gairy Studio`;
+    const description = loaderData.description;
+    return {
+      meta: [
+        { title },
+        { name: "description", content: description },
+        { property: "og:title", content: title },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "article" },
+        { property: "og:image", content: loaderData.image },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: title },
+        { name: "twitter:description", content: description },
+        { name: "twitter:image", content: loaderData.image },
+      ],
+      links: [{ rel: "canonical", href: `https://gairystudio.com/work/${params.slug}` }],
+    };
+  },
   component: ProjectPage,
 });
 

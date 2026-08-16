@@ -105,6 +105,7 @@ export const Route = createFileRoute("/")({
           "Gairy Studio is an independent creative and digital agency crafting UI/UX, web design & development, branding, motion and social for ambitious brands.",
       },
     ],
+    links: [{ rel: "canonical", href: "https://gairystudio.com/" }],
   }),
   component: Index,
 });
