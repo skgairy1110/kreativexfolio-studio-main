@@ -103,12 +103,12 @@ function WorkPage() {
                 >
                   <TiltCard>
                     <div className="gradient-border">
-                      <div className="gb-inner media-hover aspect-[4/5] w-full">
+                      <div className="gb-inner media-hover w-full">
                         <img
                           src={p.image}
                           alt={p.title}
                           loading="lazy"
-                          className="h-full w-full object-cover"
+                          className="h-auto w-full object-contain"
                         />
                       </div>
                     </div>

@@ -20,8 +20,10 @@ type Project = {
   description: string;
   sections: { challenge: string; solution: string; result: string };
   gallery: string[];
+  projectUrl?: string;
 };
-type Work = { projects: Project[] };
+type Cta = { title: string; description: string; buttonText: string };
+type Work = { projects: Project[]; cta?: Cta };
 
 export const Route = createFileRoute("/work/$slug")({
   loader: ({ params }) => {
@@ -142,20 +144,53 @@ function ProjectPage() {
       </section>
 
       {/* Gallery */}
-      <section className="mx-auto max-w-[1600px] px-6 pb-32 md:px-10 space-y-8">
-        {project.gallery.map((src, i) => (
+      <section className="mx-auto max-w-[1600px] px-6 pb-24 md:px-10">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8">
+          {project.gallery.map((src, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 60 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10% 0px" }}
+              transition={{ duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
+              className="media-hover bg-card aspect-[4/3] w-full"
+            >
+              <img src={src} alt="" loading="lazy" className="h-full w-full object-cover" />
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* CTA */}
+      {project.projectUrl && data.cta && (
+        <section className="mx-auto max-w-[1400px] px-6 pb-32 md:px-10">
           <motion.div
-            key={i}
-            initial={{ opacity: 0, y: 60 }}
+            initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-10% 0px" }}
-            transition={{ duration: 0.9, ease: [0.2, 0.8, 0.2, 1] }}
-            className={`media-hover bg-card ${i % 2 === 0 ? "aspect-[16/9]" : "aspect-[4/3] md:w-3/4 md:ml-auto"}`}
+            transition={{ duration: 0.8 }}
+            className="gradient-border"
           >
-            <img src={src} alt="" loading="lazy" className="h-full w-full object-cover" />
+            <div className="gb-inner flex flex-col items-center gap-6 bg-card px-6 py-16 text-center md:px-10 md:py-24">
+              <h2 className="font-display text-3xl md:text-5xl tracking-tight">
+                {data.cta.title}
+              </h2>
+              <p className="max-w-xl text-sm md:text-base text-muted-foreground">
+                {data.cta.description}
+              </p>
+              <a
+                href={project.projectUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="lift mt-2 inline-flex items-center gap-2 rounded-full bg-primary px-8 py-4 text-xs uppercase tracking-[0.25em] text-primary-foreground"
+                data-cursor-text="Visit"
+              >
+                {data.cta.buttonText}
+              </a>
+            </div>
           </motion.div>
-        ))}
-      </section>
+        </section>
+      )}
 
       {/* Next */}
       <section className="border-t border-border">

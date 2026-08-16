@@ -1,25 +1,35 @@
 {
-  "categories": ["All", "Website", "UI/UX", "Video", "Social Media", "Ads"],
+  "categories": [
+    "All",
+    "Brand Identity",
+    "Website",
+    "UI/UX",
+    "Video",
+    "Social Media",
+    "Ads"
+  ],
   "projects": [
     {
-      "slug": "lumen-os",
-      "title": "Lumen OS",
-      "category": "Website",
-      "client": "Lumen Labs",
-      "year": "2025",
+      "slug": "luminara-skin-care",
+      "title": "Luminara Skin Care",
+      "category": "Brand Identity",
+      "client": "Luminara",
+      "year": "2024",
       "featured": true,
-      "image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1600&q=80",
-      "description": "A marketing site for a next-generation operating system, built around a kinetic type system and an interactive hero.",
+      "image": "/images/luminara-skin-care/1.webp",
+      "description": "A refined brand identity and visual communication system for Luminara, a skincare brand blending Korean-inspired beauty rituals with modern skincare solutions.",
       "sections": {
-        "challenge": "Lumen needed a launch site that signalled platform ambition without falling into generic SaaS tropes.",
-        "solution": "We built a kinetic identity, a custom typography stack and an interactive hero that reacts to the user's cursor.",
-        "result": "Launch week traffic exceeded targets by 240% and the site was featured across major design publications."
+        "challenge": "Luminara needed a distinctive visual identity that could balance the elegance of premium skincare with a warm, approachable personality. The brand needed to feel consistent across packaging, product communication, retail environments, and digital touchpoints.",
+        "solution": "We developed a sophisticated identity built around Luminara's signature flowing mark, an elegant colour palette, refined typography, and a flexible visual language. The identity was extended across product packaging, promotional creatives, retail branding, gift materials, and campaign visuals to create a cohesive brand experience.",
+        "result": "The resulting identity gives Luminara a polished and recognisable presence across physical and digital touchpoints, creating a consistent visual experience from product packaging and marketing communication to retail environments."
       },
       "gallery": [
-        "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1600&q=80",
-        "https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=1600&q=80",
-        "https://images.unsplash.com/photo-1618005198919-d3d4b5a92ead?w=1600&q=80"
-      ]
+        "/images/luminara-skin-care/2.webp",
+        "/images/luminara-skin-care/3.webp",
+        "/images/luminara-skin-care/4.webp",
+        "/images/luminara-skin-care/5.webp"
+      ],
+      "projectUrl": "https://www.behance.net/gallery/254278649/Luminara-Skin-Care-Brand-Identity"
     },
     {
       "slug": "nova-finance",
@@ -39,7 +49,8 @@
         "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1600&q=80",
         "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1600&q=80",
         "https://images.unsplash.com/photo-1559526324-4b87b5e36e44?w=1600&q=80"
-      ]
+      ],
+      "projectUrl": ""
     },
     {
       "slug": "atlas-motion",
@@ -59,7 +70,8 @@
         "https://images.unsplash.com/photo-1500964757637-c85e8a162699?w=1600&q=80",
         "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=1600&q=80",
         "https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?w=1600&q=80"
-      ]
+      ],
+      "projectUrl": ""
     },
     {
       "slug": "ember-social",
@@ -79,7 +91,8 @@
         "https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=1600&q=80",
         "https://images.unsplash.com/photo-1611162618071-b39a2ec055fb?w=1600&q=80",
         "https://images.unsplash.com/photo-1611162616475-46b635cb6868?w=1600&q=80"
-      ]
+      ],
+      "projectUrl": ""
     },
     {
       "slug": "vox-campaign",
@@ -99,7 +112,8 @@
         "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=1600&q=80",
         "https://images.unsplash.com/photo-1583394838336-acd977736f90?w=1600&q=80",
         "https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=1600&q=80"
-      ]
+      ],
+      "projectUrl": ""
     },
     {
       "slug": "harbor-site",
@@ -119,7 +133,8 @@
         "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600&q=80",
         "https://images.unsplash.com/photo-1493558103817-58b2924bce98?w=1600&q=80",
         "https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1600&q=80"
-      ]
+      ],
+      "projectUrl": ""
     },
     {
       "slug": "kite-app",
@@ -139,7 +154,8 @@
         "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1600&q=80",
         "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1600&q=80",
         "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=1600&q=80"
-      ]
+      ],
+      "projectUrl": ""
     },
     {
       "slug": "forma-film",
@@ -159,7 +175,13 @@
         "https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1600&q=80",
         "https://images.unsplash.com/photo-1481253127861-371fed7f7daa?w=1600&q=80",
         "https://images.unsplash.com/photo-1487958449943-2429e8be8625?w=1600&q=80"
-      ]
+      ],
+      "projectUrl": ""
     }
-  ]
+  ],
+  "cta": {
+    "title": "Want to see it live?",
+    "description": "Explore the finished project in action.",
+    "buttonText": "Visit Live Project"
+  }
 }

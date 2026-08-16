@@ -22,7 +22,8 @@
     "social": [
       { "label": "Linkedin", "href": "https://www.linkedin.com/company/gairystudio" },
       { "label": "Instagram", "href": "https://www.instagram.com/gairystudio" },
-      { "label": "Facebook", "href": "https://www.facebook.com/gairystudio" }
+      { "label": "Facebook", "href": "https://www.facebook.com/gairystudio" },
+      { "label": "Behance", "href": "https://www.behance.net/gairystudio" }
     ],
     "copyright": "Gairy Studio — All rights reserved",
     "locationsLine": "Noida · Uttar Pradesh"
